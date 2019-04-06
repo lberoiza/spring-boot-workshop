@@ -56,3 +56,90 @@ Standardmäßig laufen Spring Boot Anwendungen unter dem Port 8080, um dies zu �
 Starte die erstellte Spring Boot Anwendung über Maven mit `mvn spring-boot:run`.
 Mache dich vertraut mit den zuvor in der *Aufgabe 1.2* aktivierten REST-Endpoints des Actuators.
 Dazu kann die Übersicht der REST-Endpoints des Actuators unter [http://127.0.0.1:8080/actuator](http://127.0.0.1:8080/actuator) eingesehen werden.
+
+
+## Aufgabenkomplex 2
+Dieser Aufgabenkomplex befasst sich mit der Erstellung von REST Endpoints für die Interaktion mit dem **Pet Store**.
+Das Domänenmodel vom **Pet Store** besteht aus `Pet`, welches unter `de.osp.springbootworkshop.domain.model` abgelegt wird.
+
+```java
+public class Pet {
+    @NotNull
+    @NotEmpty
+    private String name;
+
+    @NotNull
+    @NotEmpty
+    private String type;
+
+    @NotNull
+    private LocalDate birthDay;
+
+    @NotNull
+    @Digits(integer = 6, fraction = 2)
+    @DecimalMin("0.00")
+    private BigDecimal price;
+
+    // omitted public constructor, getter, setter, equals, hashCode, toString and optionally builder
+}
+```
+
+### Aufgabe 2.1: erstelle einen REST-Controller
+Es soll ein REST-Controller `PetShopRestController` unter `de.osp.springbootworkshop.application.rest` angelegt werden.
+Übergangsweise soll im `PetShopRestController` eine `Map<String, Pet>` erstellt werden, wobei der Key der Name des Haustiers und der Value das entsprechende 'Pet'.
+Die `Map<String, Pet>` soll mit folgenden Haustieren initialisiert werden:
+
+| id | type | name | birhDay | priece in € |
+|:---|:---|:---|:---|:---|
+| 1 | Hamster | Klaus | 13.04.2019 | 20.00 |
+| 2 | Hund | Rubert | 18.09.2018 | 550.00 |
+| 3 | Katze | Blacky | 12.12.2018 | 350.00 |
+
+### Aufgabe 2.2: erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
+Es soll ein REST-Endpoint `GET http://<host>:<port>/petshop/pets` im `PetShopRestController` erstellt werden.
+Der Response-Body soll vom Typ `Collection<Pet>` und Content-Type `application/json` sein und im Positivfall den HTTP-Status-Code `200` zurückgeben.
+
+***Übergangsweise soll der REST-Endpoint alle Haustiere mit `Map#values()` zurückgeben.***
+
+**_HINWEIS:_** Standardmäßig wird im Positivfall der HTTP-Status-Code `200` zurückgegeben.
+
+### Aufgabe 2.3: erstelle und teste REST-Endpoint zur Anlage eines Haustiers
+Es soll ein REST-Endpunkt `POST http://<host>:<port>/petshop/pets` im `PetShopRestController` erstellt werden.
+Der Request-Body soll vom Typ `Pet` und vom Content-Type `application/json` sein und validiert werden.
+Der Response-Body soll vom Typ `Pet` und Content-Type `application/json` sein und im Positivfall den HTTP-Status-Code `200` zurückgeben.
+Im Fehlerfall dass das Haustier mit dem Namen schon existiert soll eine `PetAlreadyExistsException` geworfen werden.
+
+```java
+public class PetAlreadyExistsException extends RuntimeException {
+    // super constructors omitted
+}
+```
+
+***Übergangsweise soll der REST-Endpoint ein neuen Eintrag mit `Map#put(String, Pet)` anlegen.***
+
+**_HINWEIS:_** Damit ein Methodenparameter als Request-Body erkannt wird muss dieser mit `@RequestBody` annotiert werden.
+
+**_HINWEIS:_** Wenn der Request-Body validiert werden soll muss dieser mit `@Validated` annotiert werden.
+
+
+### Aufgabe 2.4: erstelle und teste REST-Endpoint zur Entfernung eines Haustiers
+Es soll ein REST-Endpunkt `DELETE http://<host>:<port>/petshop/pets/{name}` im `PetShopRestController` erstellt werden.
+Der Path-Parameter `{name}` wird übergangsweise nicht ausgewertet.
+Der Response-Body soll leer sein bzw. vom Typ `void` sein und im Positivfall den HTTP-Status-Code `204` zurückgeben.
+Im Fehlerfall dass das Haustier mit dem Namen nicht existiert soll eine `PetNotExistsException` geworfen werden.
+
+```java
+public class PetNotExistsException extends RuntimeException {
+    // super constructors omitted
+}
+```
+
+***Übergangsweise soll der REST-Endpoint das Haustier mit `Map#remove(String)` entfernen.***
+
+**_HINWEIS:_** Damit ein Methodenparameter als Path-Variable erkannt wird muss dieser mit `@PathVariable` annotiert werden.
+
+**_HINWEIS:_** Standardmäßig werden Path-Variablen auf gleichnamige Methodenparameter gemappt.
+
+**_HINWEIS:_** Damit im Positivfall ein HTTP-Status-Code abweichend zu `200` zurückgegeben werden kann muss die Methode mit `@ResponseStatus` annotiert werden.
+Die Klasse `HttpStatus` besitzt die entsprechenden Konstanten für die HTTP-Status-Codes.
+
