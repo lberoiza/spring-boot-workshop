@@ -157,4 +157,4 @@ Die Klasse `HttpStatus` besitzt die entsprechenden Konstanten für die HTTP-Stat
 Es sollen alle `Exception` die von `PetShopApiException` ableiten mit einem Exception-Handler `de.ops.springbootworkshop.application.rest.PetShopExceptionHandler` behandelt werden.
 Dabei soll die Fehlermeldung der jeweiligen `Exception` in ein `de.ops.springbootworkshop.application.rest.model.ApiError` gekapselt werden.
 
-**_HINWEIS:_** Wenn eine separate Klasse zur behandlung von Exceptions verwendet wird, dann muss diese mit `@ControllerAdvice` annotiert werden.
+**_HINWEIS:_** Wenn eine separate Klasse zur Behandlung von Exceptions verwendet wird, dann muss diese mit `@ControllerAdvice` annotiert werden.
