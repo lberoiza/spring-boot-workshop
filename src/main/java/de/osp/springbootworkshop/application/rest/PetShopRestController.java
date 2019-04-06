@@ -57,8 +57,8 @@ public class PetShopRestController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Pet createPet(@RequestBody @Validated @NotNull final Pet pet) {
-        if(pets.containsKey(pet.getName())) {
-            throw new PetAlreadyExistsException(pet.getName());
+        if(pets.containsKey(pet.getName().toLowerCase().trim())) {
+            throw new PetAlreadyExistsException("pet '" + pet.getName() + "' already exists");
         }
 
         pets.put(pet.getName().toLowerCase().trim(), pet);
@@ -70,7 +70,7 @@ public class PetShopRestController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePet(@PathVariable @Validated @NotNull final String name) {
         if(pets.get(name.toLowerCase().trim()) == null) {
-            throw new PetNotExistsException(name);
+            throw new PetNotExistsException("pet '" + name + "' doesn't exists");
         }
 
         pets.remove(name.toLowerCase().trim());

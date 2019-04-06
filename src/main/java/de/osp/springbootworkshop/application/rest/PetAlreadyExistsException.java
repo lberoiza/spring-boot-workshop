@@ -3,7 +3,7 @@ package de.osp.springbootworkshop.application.rest;
 /**
  * @author Denny
  */
-public class PetAlreadyExistsException extends RuntimeException {
+public class PetAlreadyExistsException extends PetShopApiException {
     public PetAlreadyExistsException(String message) {
         super(message);
     }

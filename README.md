@@ -85,7 +85,7 @@ public class Pet {
 ```
 
 ### Aufgabe 2.1: erstelle einen REST-Controller
-Es soll ein REST-Controller `PetShopRestController` unter `de.osp.springbootworkshop.application.rest` angelegt werden.
+Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden.
 Übergangsweise soll im `PetShopRestController` eine `Map<String, Pet>` erstellt werden, wobei der Key der Name des Haustiers und der Value das entsprechende 'Pet'.
 Die `Map<String, Pet>` soll mit folgenden Haustieren initialisiert werden:
 
@@ -108,9 +108,17 @@ Es soll ein REST-Endpunkt `POST http://<host>:<port>/petshop/pets` im `PetShopRe
 Der Request-Body soll vom Typ `Pet` und vom Content-Type `application/json` sein und validiert werden.
 Der Response-Body soll vom Typ `Pet` und Content-Type `application/json` sein und im Positivfall den HTTP-Status-Code `200` zurückgeben.
 Im Fehlerfall dass das Haustier mit dem Namen schon existiert soll eine `PetAlreadyExistsException` geworfen werden.
+Die `PetAlreadyExistsException` leitet dabei von der abstrakten `de.ops.springbootworkshop.application.rest.model.PetShopApiException` ab.
 
 ```java
-public class PetAlreadyExistsException extends RuntimeException {
+public abstract class PetShopApiException extends RuntimeException {
+    // super constructors omitted
+
+}
+```
+
+```java
+public class PetAlreadyExistsException extends PetShopApiException {
     // super constructors omitted
 }
 ```
@@ -127,9 +135,10 @@ Es soll ein REST-Endpunkt `DELETE http://<host>:<port>/petshop/pets/{name}` im `
 Der Path-Parameter `{name}` wird übergangsweise nicht ausgewertet.
 Der Response-Body soll leer sein bzw. vom Typ `void` sein und im Positivfall den HTTP-Status-Code `204` zurückgeben.
 Im Fehlerfall dass das Haustier mit dem Namen nicht existiert soll eine `PetNotExistsException` geworfen werden.
+Die `PetAlreadyExistsException` leitet dabei von der abstrakten `de.ops.springbootworkshop.application.rest.model.PetShopApiException` ab.
 
 ```java
-public class PetNotExistsException extends RuntimeException {
+public class PetNotExistsException extends PetShopApiException {
     // super constructors omitted
 }
 ```
@@ -143,3 +152,9 @@ public class PetNotExistsException extends RuntimeException {
 **_HINWEIS:_** Damit im Positivfall ein HTTP-Status-Code abweichend zu `200` zurückgegeben werden kann muss die Methode mit `@ResponseStatus` annotiert werden.
 Die Klasse `HttpStatus` besitzt die entsprechenden Konstanten für die HTTP-Status-Codes.
 
+
+### Aufgabe 2.5: erstelle und teste Fehlerbehandlung
+Es sollen alle `Exception` die von `PetShopApiException` ableiten mit einem Exception-Handler `de.ops.springbootworkshop.application.rest.PetShopExceptionHandler` behandelt werden.
+Dabei soll die Fehlermeldung der jeweiligen `Exception` in ein `de.ops.springbootworkshop.application.rest.model.ApiError` gekapselt werden.
+
+**_HINWEIS:_** Wenn eine separate Klasse zur behandlung von Exceptions verwendet wird, dann muss diese mit `@ControllerAdvice` annotiert werden.

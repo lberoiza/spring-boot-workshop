@@ -3,7 +3,7 @@ package de.osp.springbootworkshop.application.rest;
 /**
  * @author Denny
  */
-public class PetNotExistsException extends RuntimeException {
+public class PetNotExistsException extends PetShopApiException {
     public PetNotExistsException(String message) {
         super(message);
     }
