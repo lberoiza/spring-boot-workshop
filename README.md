@@ -218,7 +218,7 @@ public class PetShopRestControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private String toJSON(Object o) throws Exception {
+    private String toJSON(Object o) {
         return objectMapper.writeValueAsString(o);
     }
 
