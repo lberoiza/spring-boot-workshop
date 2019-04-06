@@ -101,7 +101,7 @@ Der Response-Body soll vom Typ `Collection<Pet>` und Content-Type `application/j
 
 ***Übergangsweise soll der REST-Endpoint alle Haustiere mit `Map#values()` zurückgeben.***
 
-**_HINWEIS:_** Standardmäßig wird im Positivfall der HTTP-Status-Code `200` zurückgegeben.
+**_HINWEIS:_** Standardmäßig wird im Positivfall der HTTP-Status-Code `HttpStatus#OK` zurückgegeben.
 
 ### Aufgabe 2.3: erstelle und teste REST-Endpoint zur Anlage eines Haustiers
 Es soll ein REST-Endpunkt `POST http://<host>:<port>/petshop/pets` im `PetShopRestController` erstellt werden.
@@ -149,12 +149,79 @@ public class PetNotExistsException extends PetShopApiException {
 
 **_HINWEIS:_** Standardmäßig werden Path-Variablen auf gleichnamige Methodenparameter gemappt.
 
-**_HINWEIS:_** Damit im Positivfall ein HTTP-Status-Code abweichend zu `200` zurückgegeben werden kann muss die Methode mit `@ResponseStatus` annotiert werden.
+**_HINWEIS:_** Damit im Positivfall ein HTTP-Status-Code abweichend zu `HttpStatus#OK` zurückgegeben werden kann muss die Methode mit `@ResponseStatus` annotiert werden.
 Die Klasse `HttpStatus` besitzt die entsprechenden Konstanten für die HTTP-Status-Codes.
 
 
 ### Aufgabe 2.5: erstelle und teste Fehlerbehandlung
-Es sollen alle `Exception` die von `PetShopApiException` ableiten mit einem Exception-Handler `de.ops.springbootworkshop.application.rest.PetShopExceptionHandler` behandelt werden.
-Dabei soll die Fehlermeldung der jeweiligen `Exception` in ein `de.ops.springbootworkshop.application.rest.model.ApiError` gekapselt werden.
+Die zuvor erstellen `PetAlreadyExistsException` und `PetNotExistsException`, welche von `PetShopApiException` ableiten
+sollen durch einen Exception-Handler `de.ops.springbootworkshop.application.rest.PetShopExceptionHandler` behandelt werden.
+Dabei wird der Response als `ResponseEntity#ResponseEntity(Object, HttpStatus)` konstruiert und zurückgegeben.
+Der Response-Body bzw. `Objekt`  soll als `de.ops.springbootworkshop.application.rest.model.ApiError` angegeben werden, welcher die eigentliche Fehlermeldung der Exception enthält.
+Der HTTP-Status-Code bzw. `HttpStatus` soll bei allen Exceptions die von `PetShopExceptionHandler` ableiten `HttpStatus#BAD_REQUEST` sein.
+
+```java
+@ControllerAdvice
+public class PetShopExceptionHandler extends ResponseEntityExceptionHandler {
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return new ResponseEntity<>(ApiError.of(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    // omitted custom exception handler(s)
+}
+```
+
+```java
+public class ApiError {
+    private String message;
+
+    // omitted public constructor, getter, setter, equals, hashCode, toString and static factory
+}
+```
 
 **_HINWEIS:_** Wenn eine separate Klasse zur Behandlung von Exceptions verwendet wird, dann muss diese mit `@ControllerAdvice` annotiert werden.
+
+**_HINWEIS:_** Es ist möglich einen Exception-Handler für konkrete, abstrakte bzw. abgeleite Exceptions zu erstellen. Dazu muss die Methode mit `@ExceptionHandler` anntotiert sein und die Exception als Parameter besitzen.
+
+**_HINWEIS:_** Wenn der Exception-Handler von `ResponseEntityExceptionHandler` ableitet werden gängige Exception behandelt. Die Methoden können überschrieben werden, um die Fehlerbehandlung für die jeweilige Exception anzupassen.
+
+
+### Aufgabe 2.6: erstelle und teste WEB-MVC-Test
+Es soll ein WEB-MVC-Test für den `PetShopRestController` erstellt werden für alle REST-Endpoints mit folgenden Szenarien:
+
+| REST-Endpoint | Szenario | Erwartung |
+|:---|:---|:---|
+| `GET http://<host>:<port>/petshop/pets` | - | HTTP-Status-Code `HttpStatus#OK` und Content-Type `MediaType#APPLICATION_JSON_UTF8` |
+| `POST http://<host>:<port>/petshop/pets` | Invalider Request, es fehlen ein oder mehrere Angaben | HTTP-Status-Code `HttpStatus#BAD_REQUEST` und Content-Type `MediaType#APPLICATION_JSON_UTF8` |
+| `POST http://<host>:<port>/petshop/pets` | Invalider Request, es wird ein Haustier angelegt das bereits existiert | HTTP-Status-Code `HttpStatus#BAD_REQUEST` |
+| `POST http://<host>:<port>/petshop/pets` | Valider Request | HTTP-Status-Code `HttpStatus#OK` und Response-Body entspricht Request-Body |
+| `DELETE http://<host>:<port>/petshop/{name}` | Invalider Request, der Name eines Haustiers existiert nicht | HTTP-Status-Code `HttpStatus#BAD_REQUEST` |
+| `DELETE http://<host>:<port>/petshop/{name}` | Valider Request | HTTP-Status-Code `HttpStatus#NO_CONTENT` |
+
+Zur Umsetzung der WEB-MVC-Tests kann folgende Vorlage verwendet werden:
+
+```java
+// other imports omitted
+
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@RunWith(SpringRunner.class)
+@WebMvcTest(PetShopRestController.class)
+public class PetShopRestControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private String toJSON(Object o) throws Exception {
+        return objectMapper.writeValueAsString(o);
+    }
+
+    // tests omitted
+}
+```
