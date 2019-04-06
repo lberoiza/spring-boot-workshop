@@ -26,7 +26,7 @@ Initialisiere ein Projekt für Spring Boot mit Hilfe von [Spring initializr](htt
 | Project Metadata > Package Name | **wird automatisch erzeugt** |
 | Project Metadata > Packing | JAR |
 | Project Metadata > Java Version  | 11 |
-| Dependencies | Web *[Web]*, JPA *[SQL]* H2 *[SQL]* Actuator *[Ops]* |
+| Dependencies | Web *\[Web\]*, JPA *\[SQL\]* H2 *\[SQL\]* Actuator *\[Ops\]* |
 
 **_HINWEIS:_**  Um alle verfügbaren Dependencies anzuzeigen klick auf den Link **Dependencies > See all** im Spring initialzr.
 
@@ -42,7 +42,7 @@ Im Order für Resourcen befindet sich die [application.properties](src/main/reso
 Mache dich mit der generierten Struktur des Spring Boot Projekts vertraut.
 
 
-### Aufgabe 1.3: zusätzliche Actuator Endpoints aktivieren
+### Aufgabe 1.3: weitere Actuator Endpoints aktivieren
 Der Actuator verfügt Endpoints für JMX und REST. Standardmäßig sind nur einige der Endpoints für JMX und REST aktiviert (siehe [Actuator Endpoints](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html)).
 Standardmäßig sind nur die Actuator REST-Endpoints `actuator/info` und `actuator/health` aktiviert. Es sollen zusätzlich die REST-Endpoints `actuator/metrics` und `actuator/beans` aktiviert werden.
 Dazu muss die Datei unter [/src/resources/application.properties](src/main/resources/application.properties) bearbeitet werden.
