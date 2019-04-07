@@ -66,8 +66,9 @@ Dazu kann die Übersicht der REST-Endpoints des Actuators unter [http://127.0.0.
 
 ## Aufgabenkomplex 2
 
-Dieser Aufgabenkomplex befasst sich mit der Erstellung von REST Endpoints für die Interaktion mit dem **Pet Store**.
-Das Domänenmodel vom **Pet Store** besteht aus `Pet`, welches unter `de.osp.springbootworkshop.domain.model` abgelegt wird.
+Dieser Aufgabenkomplex befasst sich mit der Erstellung und Fehlerbehandlung von Endpunkten mit REST-Controllern in Spring Boot.
+Ziel dieses Aufgabenkomplexes ist es REST-Endpunkte zur Interaktion mit dem Domainmodel von **Pet Store** bereitzustellen.
+Das Domainmodel besteht zunächst nur aus der Entity `Pet`, welches sich unter `de.osp.springbootworkshop.domain.model` befindet.
 
 ```java
 public class Pet {
