@@ -338,3 +338,108 @@ Anschließend sollen die REST-Endpunkt die API vom Domainservice `PetShopService
 Abschließend soll getestet werden, dass die REST-Endpunkte sich wie vor der Verschiebung der Domainlogik verhalten.
 
 **_HINWEIS:_** Die Annotation `@Autowired` ist bei Constructor-Injection nicht nötig solange nur ein Constrcutor existiert.
+
+
+### Aufgabe 3.3: mocke Domainservice im WEB-MVC-Test
+
+Der `PetShopRestControllerTest` soll so angepasst werden, dass der `PetShopRestController` einen Mock von `PetShopService` verwendet.
+Für das Mocken von Beans wird das Mock-Framwork Mockito verwendet, jedoch muss die Bean anstelle von `@Mock` mit `@MockBean` annotiert werden damit diese im Application-Context registriert wird.
+
+**_BEISPIELE:_** mocken mit Mock-Framework Mockito
+
+```java
+import org.mockito.ArgumentMatchers;import java.util.Arrays;
+import static org.mockito.Mockito.*;
+
+@RunWith(SpringRunner.class)
+@WebMvcTest(MyRestController.class)
+class WebMvcTestWithMockitoTest {
+    @MockBean
+    private MyBean mock;
+
+    /**
+    * Mock a method which have no parameters and returns a list of strings for any case.
+    */
+    @Test
+    public testMockMethodWithNoParametersWhichReturnsListOfStrings() {
+        when(mock.list()).thenReturn(Arrays.asList("a", "b", "c"));
+
+        // usage of mock.list() omitted
+    }
+
+    /**
+    * Mock a method which have parameters and returns a list of strings for any case.
+    * Use org.mockito.ArgumentMatchers#any() for the given parameter.
+    */
+    @Test
+    public testMockMethodWithAnyParameterWhichReturnsListOfStrings() {
+        when(mock.listWithParameters(any())).thenReturn(Arrays.asList("a", "b", "c"));
+
+        // usage of mock.listWithParameters(...) omitted
+    }
+
+    /**
+    * Mock a method which have parameters and and returns a list of strings for given parameter criteria(s).
+    * Use org.mockito.ArgumentMatchers#eq(Object) for equalize criteria or other matchers.
+    */
+    @Test
+    public testMockMethodWithSpecificParameterWhichReturnsListOfStrings() {
+        when(mock.listWithParameters(eq(3))).thenReturn(Arrays.asList("a", "b", "c"));
+
+        // usage of mock.listWithParameters(...) omitted
+    }
+
+    /**
+    * Mock a method which have no parameters and no return, but throw an exception.
+    */
+    @Test
+    public testMockMethodWithNoParametersAndReturnsNothingWhichThrowsException() {
+        doThrow(MyException.class).when(mock).doStuff();
+
+        // usage of mock.doStuff() omitted
+    }
+
+    /**
+    * Mock a method which have no parameters and returns a list of strings, but throw an exception for any case.
+    */
+    @Test
+    public testMockMethodWithNoParametersWhichThrowsException() {
+        when(mock.list()).andThrow(MyException.class);
+
+        // usage of mock.list() omitted
+    }
+
+    /**
+    * Mock a method which have parameters and returns a list of strings, but throw an exception for any case.
+    * Use org.mockito.ArgumentMatchers#any() for the given parameter.
+    */
+    @Test
+    public testMockMethodWithAnyParameterWhichReturnsListOfStringsButThrowsException() {
+        when(mock.listWithParameters(any())).thenThrow(MyException.class);
+
+        // usage of mock.listWithParameters(...) omitted
+    }
+
+    /**
+    * Mock a method which have parameters and returns a list of strings, but throw an exception for given parameter criteria(s).
+    * Use org.mockito.ArgumentMatchers#eq(Object) for equalize criteria or other matchers.
+    */
+    @Test
+    public testMockMethodWithAnyParameterWhichReturnsListOfStringsButThrowsException() {
+        when(mock.listWithParameters(eq(3))).thenThrow(MyException.class);
+
+        // usage of mock.listWithParameters(...) omitted
+    }
+}
+```
+
+
+**_HINWEIS:_** Wenn eine Bean gemockt und deren Verhalten beschrieben und überprüft werden soll benötigt diese die Annotationen `@MockBean` und `@Autowired`.
+
+**_HINWEIS:_** Wenn eine Bean mit `@MockBean` annotiert wird um diese zu mocken, wird in Abhängkeit ob es sich um eine Interface oder Klasse handelt ggf. auf transitive Abhängigkeiten überprüft.
+Bei letzterem können transitive Abhängigkeiten vorkommen, wenn entweder nur ein Constructor existiert oder einer der mit `@Autowired` annotierte ist.
+Entsprechend müssen dessen Abhängigkeiten ebenfalls mit `@MockBean` gemockt werden.
+Um transitive Abhängigkeiten zu vermeiden empfielt es sich stattdessen ein Interface aus der Klasse zu extrahieren und dieses mit `@MockBean` zu mocken.
+
+**_HINWEIS:_** Das Mock-Framwork Mockito ist Teil der Abhängigkeit `org.springframework.boot:spring-boot-starter-test`.
+Für mehr Informationen zum Mock-Framework Mockito [Reference Documentation](https://site.mockito.org/)
