@@ -95,7 +95,7 @@ public class Pet {
 ### Aufgabe 2.1: erstelle einen REST-Controller
 
 Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden.
-Übergangsweise soll im `PetShopRestController` eine `Map<String, Pet>` erstellt werden, wobei der Key der Name des Haustiers und der Value das entsprechende 'Pet'.
+Übergangsweise sollen die Entities `Pet` im `PetShopRestController` in einer `Map<String, Pet>` persistiert werden.
 
 ```java
 @RestController
