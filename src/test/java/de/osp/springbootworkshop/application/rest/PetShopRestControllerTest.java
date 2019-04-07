@@ -2,6 +2,7 @@ package de.osp.springbootworkshop.application.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.osp.springbootworkshop.domain.model.Pet;
+import de.osp.springbootworkshop.domain.service.PetNotExistsException;
 import de.osp.springbootworkshop.domain.service.PetShopService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -107,6 +108,9 @@ public class PetShopRestControllerTest {
                 .price(BigDecimal.valueOf(750))
                 .build();
 
+        when(service.createPet(eq(rex)))
+                .thenReturn(rex);
+
         MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/petshop/pets")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -124,6 +128,11 @@ public class PetShopRestControllerTest {
         MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.delete("/petshop/pets/{name}", "Unsinkable")
                 .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8");
+
+        doThrow(PetNotExistsException.class)
+                .when(service)
+                .deletePet(eq("Unsinkable"));
+
         mockMvc.perform(builder)
                 .andDo(print())
                 .andExpect(status().isBadRequest())

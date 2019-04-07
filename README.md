@@ -390,13 +390,31 @@ class WebMvcTestWithMockitoTest {
     }
 
     /**
-    * Mock a method which have no parameters and no return, but throw an exception.
+    * Mock a method which have no parameters and no return, but throw an exception for any case.
     */
     @Test
     public testMockMethodWithNoParametersAndReturnsNothingWhichThrowsException() {
         doThrow(MyException.class).when(mock).doStuff();
 
         // usage of mock.doStuff() omitted
+    }
+
+    /**
+    * Mock a method which have parameters and no return, but throw an exception for any case.
+    * Use org.mockito.ArgumentMatchers#any() for the given parameter.
+    */
+    @Test
+    public testMockMethodWithAnyParameterAndReturnsNothingWhichThrowsException() {
+        doThrow(MyException.class).when(mock).doMoreStuff(any());
+    }
+
+    /**
+    * Mock a method which have parameters and no return, but throw an exception given parameter criteria(s).
+    * Use org.mockito.ArgumentMatchers#eq(Object) for equalize criteria or other matchers.
+    */
+    @Test
+    public testMockMethodWithAnyParameterAndReturnsNothingWhichThrowsException() {
+        doThrow(MyException.class).when(mock).doMoreStuff(eq(3));
     }
 
     /**
