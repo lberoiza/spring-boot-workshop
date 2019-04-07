@@ -1,6 +1,7 @@
 package de.osp.springbootworkshop.application.rest;
 
 import de.osp.springbootworkshop.application.rest.model.ApiError;
+import de.osp.springbootworkshop.domain.service.PetShopApiException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

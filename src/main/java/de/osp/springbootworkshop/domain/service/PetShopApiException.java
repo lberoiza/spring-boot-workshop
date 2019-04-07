@@ -1,4 +1,4 @@
-package de.osp.springbootworkshop.application.rest;
+package de.osp.springbootworkshop.domain.service;
 
 /**
  * @author Denny
