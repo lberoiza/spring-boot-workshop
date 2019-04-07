@@ -214,4 +214,5 @@ public class PetShopRestControllerTest {
     // tests omitted
 }
 ```
+
 **_HINWEIS:_** Spring Boot WEB-MVC-Test [Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-mock-environment)
