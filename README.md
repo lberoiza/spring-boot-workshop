@@ -95,14 +95,47 @@ public class Pet {
 ### Aufgabe 2.1: erstelle einen REST-Controller
 
 Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden.
-Übergangsweise soll im `PetShopRestController` eine `Map<String, Pet>` erstellt werden, wobei der Key der Name des Haustiers und der Value das entsprechende 'Pet'.
-Die `Map<String, Pet>` soll mit folgenden Haustieren initialisiert werden:
+Übergangsweise sollen die Entities `Pet` im `PetShopRestController` in einer `Map<String, Pet>` persistiert werden.
 
-| id | type    | name   | birhDay    | priece in € |
-|:---|:--------|:-------|:-----------|:------------|
-| 1  | Hamster | Klaus  | 13.04.2019 | 20.00       |
-| 2  | Hund    | Rubert | 18.09.2018 | 550.00      |
-| 3  | Katze   | Blacky | 12.12.2018 | 350.00      |
+```java
+@RestController
+@RequestMapping("/petshop/pets")
+public class PetShopRestController {
+    private final Map<String, Pet> pets;
+
+    public PetShopRestController() {
+        this.pets = new ConcurrentHashMap<>();
+
+        Pet klaus = Pet.builder()
+                .name("Klaus")
+                .type("Hamster")
+                .birthDay(LocalDate.of(2019, 4, 13))
+                .price(BigDecimal.valueOf(20))
+                .build();
+
+        Pet rubert = Pet.builder()
+                .name("Rubert")
+                .type("Hund")
+                .birthDay(LocalDate.of(2018, 9, 18))
+                .price(BigDecimal.valueOf(550))
+                .build();
+
+        Pet blacky = Pet.builder()
+                .name("Blacky")
+                .type("Katze")
+                .birthDay(LocalDate.of(2018, 12, 12))
+                .price(BigDecimal.valueOf(350))
+                .build();
+
+        this.pets.put(klaus.getName().toLowerCase().trim(), klaus);
+        this.pets.put(rubert.getName().toLowerCase().trim(), rubert);
+        this.pets.put(blacky.getName().toLowerCase().trim(), blacky);
+    }
+
+    // omitted REST endpoints
+}
+
+```
 
 ### Aufgabe 2.2: erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
 
