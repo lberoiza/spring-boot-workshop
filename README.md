@@ -1,19 +1,12 @@
 # Spring Boot Workshop 2.0
 
-## Vorausetzungen
-
-* JDK 11
-* GIT
-* IDE mit Unterstützung für Java
-* REST-Client z.B. [insomnia](https://insomnia.rest/) oder [SoapUI](https://www.soapui.org/)
-
 ## Aufgabenkomplex 4
 
 Der Aufgabenkomplex befasst sich mit der Erstellung von Repositories für SQL in Spring Boot. Ziel dieses Aufgabenkomplexes ist die Übergangsweise Persistenz mit `Map<String, Pet>`
 aus dem Domainservice `PetShopService` in eine SQL Datenbank zu verschieben. Und das der Zugriff auf die Datenbank mit Repositories durch Spring Data erfolgt.
 
 
-## Vorbedingungen:
+## Vorbedingungen
 
 ### erweitern des Domainmodel
 
@@ -91,8 +84,8 @@ spring.jpa.hibernate.ddl-auto= # none, validate, update, create or create-drop
 
 Die zweite Möglichkeit besteht darin ein SQL Skript `src/main/resources/scheme.sql` anzulegen und via DDL die Tabellen zu initialisieren.
 
-**_DOKUMENTATION:_** Spring Boot Database Initialization
-[Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
+**_DOKUMENTATION:_**
+[Spring Boot Database Initialization](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
 
 ### initialisieren der Datenbank mit Daten
 
@@ -110,8 +103,8 @@ INSERT INTO pet_types (name) VALUES
 ```
 
 
-**_DOKUMENTATION:_** Spring Boot Database Initialization
-[Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
+**_DOKUMENTATION:_**
+[Spring Boot Database Initialization](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
 
 
 ### Aufgabe 4.1: aktivieren der H2 Console
@@ -135,8 +128,10 @@ gegen die Datenbank verbinden:
 | User Name    | sa                   |
 | Password     | -                    |
 
-**_DOKUMENTATION:_** Spring Boot H2 Web Console
-[Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html#boot-features-sql-h2-console)
+Die Tabellen `pets` und `pet_types` sollten angelegt sein. Für letztere sollten bereits Daten existieren.
+
+**_DOKUMENTATION:_**
+[Spring Boot H2 Web Console](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html#boot-features-sql-h2-console)
 
 **_HINWEIS:_** Um SQL-Statements im Log der Spring Boot Anwendung sehen zu können müssen zwei Properties in `application.properties` gesetzt werden:
 
@@ -145,5 +140,22 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 ```
 
-### Aufgabe 4.2:
+### Aufgabe 4.2: implementiere ein Repository
 
+Es soll ein Repository `PetRepository` für das Entity `Pet` umgesetzt werden. Dabei soll von dem Interface `CrudRepository<T,ID>` ableitet werden.
+
+
+**_DOKUMENTATION:_** [Spring Data Repositories](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories)
+
+### Aufgabe 4.3: erweitern von Repository mit eigenen Queries
+
+Das Repository `PetRespository` soll um eine Methode zur Abfrage eines `Pet` anhand dessen Namen erweitert werden.
+Wahlweise kann die Umsetzung des Queries durch den Methodennamen oder durch die Annotation `@Query` erfolgen.
+
+**_DOKUMENTATION:_**
+[Spring Data Defining Query Methods](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details),
+[Spring Data Query Methods Handling Nullability](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.nullability),
+[Hibernate Query Language (HQL)](https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/queryhql.html)
+
+**_HINWEIS:_** Wenn Queries mit der Annotation `@Query` umgesetzt werden, dann wird standardmäßig das Query im Dialekt `HQL` (Hibernate Query Language) erwartet.
+Jedoch kann in der Annotation `@Query` die Angabe `nativeQuery = true` gemacht werden damit das Query mit dem Dialekt der verwendeten Datenbank erwartet wird.
