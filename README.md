@@ -36,8 +36,8 @@ public class Pet {
 Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden.
 Übergangsweise sollen die Entities `Pet` im `PetShopRestController` in einer `Map<String, Pet>` persistiert werden.
 
-**_DOKUMENTATION:_** Spring Boot Web MVC
-[Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc)
+**_DOKUMENTATION:_**
+[Spring Boot Web MVC](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc)
 
 
 ### Aufgabe 2.2: erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
@@ -128,8 +128,8 @@ public class ApiError {
 }
 ```
 
-**_DOKUMENTATION:_** Spring Boot Web MVC Errorhandling
-[Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-error-handling)
+**_DOKUMENTATION:_**
+[Spring Boot Web MVC Error Handling](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-error-handling)
 
 **_HINWEIS:_** Wenn eine separate Klasse zur Behandlung von Exceptions verwendet wird, dann muss diese mit `@ControllerAdvice` annotiert werden.
 
@@ -178,5 +178,5 @@ public class PetShopRestControllerTest {
 }
 ```
 
-**_DOKUMENTATION:_** Spring Boot Web-MVC Test
-[Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-mock-environment)
+**_DOKUMENTATION:_**
+[RSpring Boot Web-MVC Test](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-mock-environment)
