@@ -21,6 +21,9 @@ public class PetType {
     @NotEmpty
     private String name;
 
+    public PetType() {
+    }
+
     public PetType(String name) {
         this.name = name;
     }

@@ -3,11 +3,7 @@ package de.osp.springbootworkshop.domain.model;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
@@ -29,10 +25,10 @@ public class Pet {
     @NotEmpty
     private String name;
 
+    @ManyToOne
     @JoinColumn(name = "type", nullable = false)
     @NotNull
-    @NotEmpty
-    private String type;
+    private PetType type;
 
     @Column(name = "birth_date", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -45,7 +41,10 @@ public class Pet {
     @DecimalMin("0.00")
     private BigDecimal price;
 
-    public Pet(String type,
+    public Pet() {
+    }
+
+    public Pet(PetType type,
                String name,
                LocalDate birthDay,
                BigDecimal price) {
@@ -59,11 +58,11 @@ public class Pet {
         return new Builder();
     }
 
-    public String getType() {
+    public PetType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(PetType type) {
         this.type = type;
     }
 
@@ -118,7 +117,7 @@ public class Pet {
     }
 
     public static final class Builder {
-        private String type;
+        private PetType type;
         private String name;
         private LocalDate birthDay;
         private BigDecimal price;
@@ -126,7 +125,7 @@ public class Pet {
         private Builder() {
         }
 
-        public Builder type(String type) {
+        public Builder type(PetType type) {
             this.type = type;
             return this;
         }

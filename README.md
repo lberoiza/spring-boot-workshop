@@ -18,7 +18,7 @@ public class PetType {
     @NotEmpty
     private String name;
 
-    // omitted public constructor, getter, setter, equals, hashCode, toString and optionally builder
+    // omitted public no args constructor, getter, setter, equals, hashCode, toString and optionally builder
 }
 ```
 
@@ -36,10 +36,10 @@ public class Pet {
     @NotEmpty
     private String name;
 
+    @ManyToOne
     @JoinColumn(name = "type", nullable = false)
     @NotNull
-    @NotEmpty
-    private String type;
+    private PetType type;
 
     @Column(name = "birth_date", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -52,7 +52,7 @@ public class Pet {
     @DecimalMin("0.00")
     private BigDecimal price;
 
-    // omitted public constructor, getter, setter, equals, hashCode, toString and optionally builder
+    // omitted public no args constructor, getter, setter, equals, hashCode, toString and optionally builder
 }
 ```
 
@@ -66,7 +66,7 @@ public class PetType {
     @NotEmpty
     private String name;
 
-    // omitted public constructor, getter, setter, equals, hashCode, toString and optionally builder
+    // omitted public no args constructor, getter, setter, equals, hashCode, toString and optionally builder
 }
 ```
 
@@ -85,7 +85,7 @@ spring.jpa.hibernate.ddl-auto= # none, validate, update, create or create-drop
 Die zweite Möglichkeit besteht darin ein SQL Skript `src/main/resources/scheme.sql` anzulegen und via DDL die Tabellen zu initialisieren.
 
 **_DOKUMENTATION:_**
-[Spring Boot Database Initialization](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
+[Spring Boot Database Initialization](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
 
 ### initialisieren der Datenbank mit Daten
 
@@ -100,11 +100,17 @@ INSERT INTO pet_types (name) VALUES
     ('Hund'),
     ('Katze'),
     ('Vogel');
+
+insert into pets (name, type, birth_date, price) values
+('Klaus', 'Hamster', to_date('13.04.2019', 'dd.mm.yyyy'), 20);
+insert into pets (name, type, birth_date, price) values
+('Rubert', 'Hund', to_date('18.09.2018', 'dd.mm.yyyy'), 550);
+insert into pets (name, type, birth_date, price) values
+('Blacky', 'Katze', to_date('12.12.2018', 'dd.mm.yyyy'), 350);
 ```
 
-
 **_DOKUMENTATION:_**
-[Spring Boot Database Initialization](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
+[Spring Boot Database Initialization](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
 
 
 ### Aufgabe 4.1: aktivieren der H2 Console
@@ -118,7 +124,7 @@ spring.h2.console.enabled=true
 spring.h2.console.path=/h2-console
 ```
 
-Nach dem Start der Spring Boot Anwendung ist die H2 Console unter [http://localhost:8080/h2-console]( http://localhost:8080/actuator) und man kann sich mit folgenden Anmeldedaten
+Nach dem Start der Spring Boot Anwendung ist die H2 Console unter [http://localhost:8080/h2-console]( http://localhost:8080/actuator) und man kann sich mit folgenden Anmeldedaten
 gegen die Datenbank verbinden:
 
 | Bezeichnung  | Wert                 |
@@ -131,7 +137,7 @@ gegen die Datenbank verbinden:
 Die Tabellen `pets` und `pet_types` sollten angelegt sein. Für letztere sollten bereits Daten existieren.
 
 **_DOKUMENTATION:_**
-[Spring Boot H2 Web Console](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html#boot-features-sql-h2-console)
+[Spring Boot H2 Web Console](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html#boot-features-sql-h2-console)
 
 **_HINWEIS:_** Um SQL-Statements im Log der Spring Boot Anwendung sehen zu können müssen zwei Properties in `application.properties` gesetzt werden:
 
@@ -142,20 +148,22 @@ spring.jpa.properties.hibernate.format_sql=true
 
 ### Aufgabe 4.2: implementiere ein Repository
 
-Es soll ein Repository `PetRepository` für das Entity `Pet` umgesetzt werden. Dabei soll von dem Interface `CrudRepository<T,ID>` ableitet werden.
+Es soll ein Repository `de.osp.springbootworkshop.domain.repository.PetRepository` für das Entity `Pet` umgesetzt werden.
+Dabei soll `PetRepository` als Interface implementiert werden und von dem Interface `CrudRepository<T,ID>` ableiten.
 
+**_DOKUMENTATION:_**
+[Spring Data Repositories](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories)
+[CrudRepository Java Doc](https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html)
 
-**_DOKUMENTATION:_** [Spring Data Repositories](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories)
 
 ### Aufgabe 4.3: erweitern von Repository mit eigenen Queries
 
-Das Repository `PetRespository` soll um eine Methode zur Abfrage eines `Pet` anhand dessen Namen erweitert werden.
+Das Repository `PetRespository` soll um eine Methode zur Abfrage einer `List<Pet>` anhand deren Geburtstag erweitert werden.
 Wahlweise kann die Umsetzung des Queries durch den Methodennamen oder durch die Annotation `@Query` erfolgen.
 
 **_DOKUMENTATION:_**
-[Spring Data Defining Query Methods](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details),
-[Spring Data Query Methods Handling Nullability](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.nullability),
-[Hibernate Query Language (HQL)](https://docs.jboss.org/hibernate/orm/3.3/reference/en/html/queryhql.html)
+[Spring Data Defining Query Methods](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details),
+[Spring Data Query Methods Handling Nullability](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.nullability),
 
-**_HINWEIS:_** Wenn Queries mit der Annotation `@Query` umgesetzt werden, dann wird standardmäßig das Query im Dialekt `HQL` (Hibernate Query Language) erwartet.
+**_HINWEIS:_** Wenn Queries mit der Annotation `@Query` umgesetzt werden, dann wird standardmäßig das Query im Dialekt `JPQL` erwartet.
 Jedoch kann in der Annotation `@Query` die Angabe `nativeQuery = true` gemacht werden damit das Query mit dem Dialekt der verwendeten Datenbank erwartet wird.

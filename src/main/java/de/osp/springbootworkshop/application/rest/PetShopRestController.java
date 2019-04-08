@@ -25,7 +25,7 @@ public class PetShopRestController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Collection<Pet> listPets() {
+    public Iterable<Pet> listPets() {
         return service.listPets();
     }
 
