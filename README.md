@@ -80,6 +80,10 @@ public class PetShopRestController {
 
 ```
 
+**_DOKUMENTATION:_** Spring Boot Web MVC
+[Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc)
+
+
 ### Aufgabe 2.2: erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
 
 Es soll ein REST-Endpoint `GET http://<host>:<port>/petshop/pets` im `PetShopRestController` erstellt werden.
@@ -168,6 +172,9 @@ public class ApiError {
 }
 ```
 
+**_DOKUMENTATION:_** Spring Boot Web MVC Errorhandling
+[Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-error-handling)
+
 **_HINWEIS:_** Wenn eine separate Klasse zur Behandlung von Exceptions verwendet wird, dann muss diese mit `@ControllerAdvice` annotiert werden.
 
 **_HINWEIS:_** Es ist möglich einen Exception-Handler für konkrete, abstrakte bzw. abgeleite Exceptions zu erstellen. Dazu muss die Methode mit `@ExceptionHandler` anntotiert sein und die Exception als Parameter besitzen.
@@ -175,9 +182,9 @@ public class ApiError {
 **_HINWEIS:_** Wenn der Exception-Handler von `ResponseEntityExceptionHandler` ableitet werden gängige Exception behandelt. Die Methoden können überschrieben werden, um die Fehlerbehandlung für die jeweilige Exception anzupassen.
 
 
-### Aufgabe 2.6: erstelle und teste WEB-MVC-Test
+### Aufgabe 2.6: erstelle und teste Web-MVC Test
 
-Es soll ein WEB-MVC-Test für den `PetShopRestController` erstellt werden für alle REST-Endpoints mit folgenden Szenarien:
+Es soll ein Web-MVC Test für den `PetShopRestController` erstellt werden für alle REST-Endpoints mit folgenden Szenarien:
 
 | REST-Endpoint                                | Szenario                                                               | Erwartung                                                                                    |
 |:---------------------------------------------|:-----------------------------------------------------------------------|:---------------------------------------------------------------------------------------------|
@@ -188,7 +195,7 @@ Es soll ein WEB-MVC-Test für den `PetShopRestController` erstellt werden für a
 | `DELETE http://<host>:<port>/petshop/{name}` | Invalider Request, der Name eines Haustiers existiert nicht            | HTTP-Status-Code `HttpStatus#BAD_REQUEST`                                                    |
 | `DELETE http://<host>:<port>/petshop/{name}` | Valider Request                                                        | HTTP-Status-Code `HttpStatus#NO_CONTENT`                                                     |
 
-Zur Umsetzung der WEB-MVC-Tests kann folgende Vorlage verwendet werden:
+Zur Umsetzung der Web-MVC Tests kann folgende Vorlage verwendet werden:
 
 ```java
 // other imports omitted
@@ -215,4 +222,5 @@ public class PetShopRestControllerTest {
 }
 ```
 
-**_HINWEIS:_** Spring Boot WEB-MVC-Test [Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-mock-environment)
+**_DOKUMENTATION:_** Spring Boot Web-MVC Test
+[Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-mock-environment)
