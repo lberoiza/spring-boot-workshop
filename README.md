@@ -47,10 +47,12 @@ Mache dich mit der generierten Struktur des Spring Boot Projekts vertraut.
 
 ### Aufgabe 1.3: weitere Actuator Endpoints aktivieren
 
-Der Actuator verfügt Endpoints für JMX und REST. Standardmäßig sind nur einige der Endpoints für JMX und REST aktiviert. Standardmäßig sind nur die Actuator REST-Endpoints
-`actuator/info` und `actuator/health` aktiviert. Es sollen zusätzlich die REST-Endpoints `actuator/metrics` und `actuator/beans` aktiviert werden. Dazu muss die Datei unter
-`src/main/resources/application.properties` bearbeitet werden. Dabei soll das Property `management.endpoints.web.exposure.include=health,info,metrics,beans` gesetzt werden, wodurch
-die zusätzlichen REST-Endpoints aktiviert sind.
+Der Actuator verfügt Endpoints für JMX und REST. Standardmäßig sind nur einige der Endpoints für JMX und REST aktiviert. Standardmäßig sind nur die Actuator REST-Endpoints `info`
+und `health` aktiviert. Es sollen zusätzlich die REST-Endpoints `metrics` und `beans` aktiviert werden. Dafür muss die `application.properties` wie folgt bearbeitet werden:
+
+```properties
+management.endpoints.web.exposure.include=health,info,metrics,beans
+```
 
 **_DOKUMENTATION:_** Spring Boot Actuator Endpoints [Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html),
 [common-application-properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
@@ -59,5 +61,5 @@ die zusätzlichen REST-Endpoints aktiviert sind.
 ### Aufgabe 1.4: starten der Spring Boot Anwendung
 
 Standardmäßig laufen Spring Boot Anwendungen unter dem Port 8080, um dies zu ändern muss das Property `server.port=<port>` gesetzt werden. Starte die erstellte Spring Boot
-Anwendung über Maven mit `mvn spring-boot:run`. Mache dich vertraut mit den REST-Endpoints des Actuators. Eine Übersicht über die aktivierten REST-Endpoints des Actuators
-kann mit [http://127.0.0.1:8080/actuator](http://127.0.0.1:8080/actuator) eingesehen werden.
+Anwendung über Maven mit `mvn spring-boot:run`. Mache dich vertraut mit den REST-Endpoints des Actuators. Eine Übersicht über die aktivierten REST-Endpoints des Actuators kann mit
+[http://localhost:8080/actuator](http://localhost:8080/actuator) eingesehen werden.
