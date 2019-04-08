@@ -66,7 +66,7 @@ public class PetType {
     @NotEmpty
     private String name;
 
-    // omitted public no args constructor, getter, setter, equals, hashCode, toString and optionally builder
+    // omitted public no args constructor, getter, setter, equals, hashCode, toString and optionally static factory
 }
 ```
 
@@ -167,3 +167,11 @@ Wahlweise kann die Umsetzung des Queries durch den Methodennamen oder durch die 
 
 **_HINWEIS:_** Wenn Queries mit der Annotation `@Query` umgesetzt werden, dann wird standardmäßig das Query im Dialekt `JPQL` erwartet.
 Jedoch kann in der Annotation `@Query` die Angabe `nativeQuery = true` gemacht werden damit das Query mit dem Dialekt der verwendeten Datenbank erwartet wird.
+
+
+### Zusatzaufgabe: Testen von Repository mit Data-JPA-Test
+
+**_DOKUMENTATION:_**
+[Spring Data JPA Test](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-jpa-test)
+
+**_HINWEIS:_** Das Asssertion-Framwork assertJ ist Teil der Abhängigkeit `org.springframework.boot:spring-boot-starter-test` ([assertJ](http://joel-costigliola.github.io/assertj/)).

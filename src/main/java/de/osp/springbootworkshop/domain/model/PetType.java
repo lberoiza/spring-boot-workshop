@@ -28,6 +28,9 @@ public class PetType {
         this.name = name;
     }
 
+    public static PetType of(String name) {
+        return new PetType(name);
+    }
     public String getName() {
         return name;
     }

@@ -2,6 +2,7 @@ package de.osp.springbootworkshop.application.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.osp.springbootworkshop.domain.model.Pet;
+import de.osp.springbootworkshop.domain.model.PetType;
 import de.osp.springbootworkshop.domain.service.PetNotExistsException;
 import de.osp.springbootworkshop.domain.service.PetShopService;
 import org.junit.Test;
@@ -50,21 +51,21 @@ public class PetShopRestControllerTest {
     public void testListPets() throws Exception {
         Pet klaus = Pet.builder()
                 .name("Klaus")
-                .type("Hamster")
+                .type(PetType.of("Hamster"))
                 .birthDay(LocalDate.of(2019, 4, 13))
                 .price(BigDecimal.valueOf(20))
                 .build();
 
         Pet rubert = Pet.builder()
                 .name("Rubert")
-                .type("Hund")
+                .type(PetType.of("Hund"))
                 .birthDay(LocalDate.of(2018, 9, 18))
                 .price(BigDecimal.valueOf(550))
                 .build();
 
         Pet blacky = Pet.builder()
                 .name("Blacky")
-                .type("Katze")
+                .type(PetType.of("Katze"))
                 .birthDay(LocalDate.of(2018, 12, 12))
                 .price(BigDecimal.valueOf(350))
                 .build();
@@ -103,7 +104,7 @@ public class PetShopRestControllerTest {
     public void testCreatePetWithValidRequest() throws Exception {
         Pet rex = Pet.builder()
                 .name("Rex")
-                .type("Hund")
+                .type(PetType.of("Hund"))
                 .birthDay(LocalDate.of(2018, 10, 13))
                 .price(BigDecimal.valueOf(750))
                 .build();
