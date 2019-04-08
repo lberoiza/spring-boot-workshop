@@ -27,7 +27,7 @@ public class Pet {
     @DecimalMin("0.00")
     private BigDecimal price;
 
-    // omitted public constructor, getter, setter, equals, hashCode, toString and optionally builder
+    // omitted public no args constructor, getter, setter, equals, hashCode, toString and optionally builder
 }
 ```
 
