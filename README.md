@@ -25,8 +25,8 @@ Der Domainservice `PetShopService` soll via Constructor-Injection in den `PetSho
 Der `PetShopRestControllerTest` soll so angepasst werden, dass der `PetShopRestController` einen Mock von `PetShopService` verwendet. Für das Mocken von Beans wird das
 Mock-Framwork Mockito verwendet, jedoch muss die Bean anstelle von `@Mock` mit `@MockBean` annotiert werden damit diese im Application-Context registriert wird.
 
-**_DOKUMENTATION:_** Spring Boot Mocking and Spying Beans
-[Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-mocking-beans)
+**_DOKUMENTATION:_**
+[Spring Boot Mocking and Spying Beans](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-mocking-beans)
 
 **_HINWEIS:_** Wenn eine Bean gemockt und deren Verhalten beschrieben und überprüft werden soll benötigt diese die Annotationen `@MockBean` und `@Autowired`.
 
