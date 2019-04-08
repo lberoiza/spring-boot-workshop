@@ -1,16 +1,12 @@
 # Spring Boot Workshop 2.0
 
-## Vorausetzungen
-
-* JDK 11
-* GIT
-* IDE mit Unterstützung für Java
-* REST-Client z.B. [insomnia](https://insomnia.rest/) oder [SoapUI](https://www.soapui.org/)
-
 ## Aufgabenkomplex 2
 
 Dieser Aufgabenkomplex befasst sich mit der Erstellung und Fehlerbehandlung von Endpunkten mit REST-Controllern in Spring Boot.
 Ziel dieses Aufgabenkomplexes ist es REST-Endpunkte zur Interaktion mit dem Domainmodel von **Pet Store** bereitzustellen.
+
+### Vorbedingungen
+
 Das Domainmodel besteht zunächst nur aus der Entity `Pet`, welches sich unter `de.osp.springbootworkshop.domain.model` befindet.
 
 ```java
@@ -39,46 +35,6 @@ public class Pet {
 
 Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden.
 Übergangsweise sollen die Entities `Pet` im `PetShopRestController` in einer `Map<String, Pet>` persistiert werden.
-
-```java
-@RestController
-@RequestMapping("/petshop/pets")
-public class PetShopRestController {
-    private final Map<String, Pet> pets;
-
-    public PetShopRestController() {
-        this.pets = new ConcurrentHashMap<>();
-
-        Pet klaus = Pet.builder()
-                .name("Klaus")
-                .type("Hamster")
-                .birthDay(LocalDate.of(2019, 4, 13))
-                .price(BigDecimal.valueOf(20))
-                .build();
-
-        Pet rubert = Pet.builder()
-                .name("Rubert")
-                .type("Hund")
-                .birthDay(LocalDate.of(2018, 9, 18))
-                .price(BigDecimal.valueOf(550))
-                .build();
-
-        Pet blacky = Pet.builder()
-                .name("Blacky")
-                .type("Katze")
-                .birthDay(LocalDate.of(2018, 12, 12))
-                .price(BigDecimal.valueOf(350))
-                .build();
-
-        this.pets.put(klaus.getName().toLowerCase().trim(), klaus);
-        this.pets.put(rubert.getName().toLowerCase().trim(), rubert);
-        this.pets.put(blacky.getName().toLowerCase().trim(), blacky);
-    }
-
-    // omitted REST endpoints
-}
-
-```
 
 **_DOKUMENTATION:_** Spring Boot Web MVC
 [Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc)
@@ -148,9 +104,9 @@ Die Klasse `HttpStatus` besitzt die entsprechenden Konstanten für die HTTP-Stat
 
 Die zuvor erstellen `PetAlreadyExistsException` und `PetNotExistsException`, welche von `PetShopApiException` ableiten
 sollen durch einen Exception-Handler `de.ops.springbootworkshop.application.rest.PetShopExceptionHandler` behandelt werden.
-Dabei wird der Response als `ResponseEntity#ResponseEntity(Object, HttpStatus)` konstruiert und zurückgegeben.
-Der Response-Body bzw. `Objekt`  soll als `de.ops.springbootworkshop.application.rest.model.ApiError` angegeben werden, welcher die eigentliche Fehlermeldung der Exception enthält.
-Der HTTP-Status-Code bzw. `HttpStatus` soll bei allen Exceptions die von `PetShopExceptionHandler` ableiten `HttpStatus#BAD_REQUEST` sein.
+Dieser beinhaltet bereits eine Methode die mit `@ExceptionHandler` annotiert ist und Exceptions behandelt die durch Validierungsfehler entsteht.
+Für `ResponseEntity` soll der Response-Body `de.ops.springbootworkshop.application.rest.model.ApiError` verwerndet werden, welcher die Fehlermeldung der behandelten Exception enthält.
+Der HTTP-Status-Code bzw. `HttpStatus` dabei `400` bzw. `HttpStatus#BAD_REQUEST` sein.
 
 ```java
 @ControllerAdvice
@@ -182,7 +138,7 @@ public class ApiError {
 **_HINWEIS:_** Wenn der Exception-Handler von `ResponseEntityExceptionHandler` ableitet werden gängige Exception behandelt. Die Methoden können überschrieben werden, um die Fehlerbehandlung für die jeweilige Exception anzupassen.
 
 
-### Aufgabe 2.6: erstelle und teste Web-MVC Test
+### Zusatzaufgabe: erstelle und teste Web-MVC Test
 
 Es soll ein Web-MVC Test für den `PetShopRestController` erstellt werden für alle REST-Endpoints mit folgenden Szenarien:
 
