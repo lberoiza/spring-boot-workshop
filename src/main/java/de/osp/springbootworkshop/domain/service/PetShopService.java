@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -45,7 +44,7 @@ public class PetShopService {
         this.pets.put(blacky.getName().toLowerCase().trim(), blacky);
     }
 
-    public Collection<Pet> listPets() {
+    public Iterable<Pet> listPets() {
         return pets.values();
     }
 
