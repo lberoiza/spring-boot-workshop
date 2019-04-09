@@ -77,7 +77,7 @@ spring.jpa.hibernate.ddl-auto= # none, validate, update, create or create-drop
 ```
 
 Die zweite Möglichkeit besteht darin ein SQL-Skript `src/main/resources/scheme.sql` anzulegen und via DDL die Tabellen zu initialisieren. Standardmäßig ist diese Art der
-Initialisierung für embdedded Datenbanken aktiviert, kann jedoch über folgendes Property in der `application.prroperties` geändert werden:
+Initialisierung für embedded Datenbanken aktiviert, kann jedoch über folgendes Property in der `application.properties` geändert werden:
 
 ```properties
 spring.datasource.initialization-mode= # never, always or embedded
@@ -108,7 +108,7 @@ insert into pets (name, type, birth_date, price) values
 ('Blacky', 'Katze', to_date('12.12.2018', 'dd.mm.yyyy'), 350);
 ```
 
-Standardmäßig ist diese Art der Initialisierung für embdedded Datenbanken aktiviert, kann jedoch über folgendes Property in der `application.prroperties` geändert werden:
+Standardmäßig ist diese Art der Initialisierung für embdedded Datenbanken aktiviert, kann jedoch über folgendes Property in der `application.properties` geändert werden:
 
 ```properties
 spring.datasource.initialization-mode= # never, always or embedded
@@ -121,7 +121,7 @@ spring.datasource.initialization-mode= # never, always or embedded
 ## Aufgabenkomplex 4
 
 Der Aufgabenkomplex befasst sich mit der Erstellung von Repositories für SQL in Spring Boot. Ziel dieses Aufgabenkomplexes ist die Übergangsweise Persistenz mit `Map<String, Pet>`
-aus dem Domainservice `PetShopService` in eine SQL Datenbank zu verschieben. Und das der Zugriff auf die Datenbank mit Repositories durch Spring Data erfolgt.
+aus dem Domain-Service `PetShopService` in eine SQL Datenbank zu verschieben. Und das der Zugriff auf die Datenbank mit Repositories durch Spring Data erfolgt.
 
 
 ### Aufgabe 4.1: aktivieren der H2 Console
@@ -168,7 +168,7 @@ werden und von dem Interface `CrudRepository<T,ID>` ableiten.
 
 ### Aufgabe 4.3: erweitern von Repository mit eigenen Queries
 
-Das Repository `PetRespository` soll um eine Methode zur Abfrage einer `List<Pet>` anhand deren Geburtstag erweitert werden. Wahlweise kann die Umsetzung des Queries durch den
+Das Repository `PetRepository` soll um eine Methode zur Abfrage einer `List<Pet>` anhand deren Geburtstag erweitert werden. Wahlweise kann die Umsetzung des Queries durch den
 Methodennamen oder durch die Annotation `@Query` erfolgen.
 
 **_DOKUMENTATION:_** [Spring Data Defining Query Methods](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details),
