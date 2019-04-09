@@ -71,6 +71,9 @@ public class PetShopRestController {
         this.pets.put(rubert.getName().toLowerCase().trim(), rubert);
         this.pets.put(blacky.getName().toLowerCase().trim(), blacky);
     }
+
+    // methods for REST endpoints omitted
+}
 ```
 
 **_DOKUMENTATION:_** [Spring Boot Web MVC](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc)
