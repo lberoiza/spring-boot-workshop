@@ -43,16 +43,16 @@ in einer `Map<String, Pet>` persistiert werden.
 ### Aufgabe 2.2: erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
 
 Es soll ein REST-Endpoint `GET http://<host>:<port>/petshop/pets` im `PetShopRestController` erstellt werden. Der Response-Body soll vom Typ `Collection<Pet>` und Content-Type
-`application/json` sein und im Positivfall den HTTP-Status-Code `200` zurückgeben.
+`application/json` sein und im positiven Fall den HTTP-Status-Code `200` zurückgeben.
 
 ***Übergangsweise soll der REST-Endpoint alle Haustiere mit `Map#values()` zurückgeben.***
 
-**_HINWEIS:_** Standardmäßig wird im Positivfall der HTTP-Status-Code `HttpStatus#OK` zurückgegeben.
+**_HINWEIS:_** Standardmäßig wird im positiven Fall der HTTP-Status-Code `HttpStatus#OK` zurückgegeben.
 
 ### Aufgabe 2.3: erstelle und teste REST-Endpoint zur Anlage eines Haustiers
 
 Es soll ein REST-Endpunkt `POST http://<host>:<port>/petshop/pets` im `PetShopRestController` erstellt werden. Der Request-Body soll vom Typ `Pet` und vom Content-Type
-`application/json` sein und validiert werden. Der Response-Body soll vom Typ `Pet` und Content-Type `application/json` sein und im Positivfall den HTTP-Status-Code `200`
+`application/json` sein und validiert werden. Der Response-Body soll vom Typ `Pet` und Content-Type `application/json` sein und im positiven Fall den HTTP-Status-Code `200`
 zurückgeben. Im Fehlerfall dass das Haustier mit dem Namen schon existiert soll eine `PetAlreadyExistsException` geworfen werden. Die `PetAlreadyExistsException` leitet dabei von
 der abstrakten `de.ops.springbootworkshop.application.rest.model.PetShopApiException` ab.
 
@@ -94,7 +94,7 @@ public class PetNotExistsException extends PetShopApiException {
 
 **_HINWEIS:_** Standardmäßig werden Path-Variablen auf gleichnamige Methodenparameter gemappt.
 
-**_HINWEIS:_** Damit im Positivfall ein HTTP-Status-Code abweichend zu `HttpStatus#OK` zurückgegeben werden kann muss die Methode mit `@ResponseStatus` annotiert werden. Die Klasse
+**_HINWEIS:_** Damit im positiven Fall ein HTTP-Status-Code abweichend zu `HttpStatus#OK` zurückgegeben werden kann muss die Methode mit `@ResponseStatus` annotiert werden. Die Klasse
 `HttpStatus` besitzt die entsprechenden Konstanten für die HTTP-Status-Codes.
 
 
@@ -102,7 +102,7 @@ public class PetNotExistsException extends PetShopApiException {
 
 Die zuvor erstellen `PetAlreadyExistsException` und `PetNotExistsException`, welche von `PetShopApiException` ableiten sollen durch einen Exception-Handler
 `de.ops.springbootworkshop.application.rest.PetShopExceptionHandler` behandelt werden. Dieser beinhaltet bereits eine Methode die mit `@ExceptionHandler` annotiert ist und
-Exceptions behandelt die durch Validierungsfehler entsteht. Für `ResponseEntity` soll der Response-Body `de.ops.springbootworkshop.application.rest.model.ApiError` verwerndet
+Exceptions behandelt die bei fehlgeschlagenen Validierung. Für `ResponseEntity` soll der Response-Body `de.ops.springbootworkshop.application.rest.model.ApiError` verwendet
 werden, welcher die Fehlermeldung der behandelten Exception enthält. Der HTTP-Status-Code bzw. `HttpStatus` dabei `400` bzw. `HttpStatus#BAD_REQUEST` sein.
 
 ```java
@@ -129,7 +129,7 @@ public class ApiError {
 
 **_HINWEIS:_** Wenn eine separate Klasse zur Behandlung von Exceptions verwendet wird, dann muss diese mit `@ControllerAdvice` annotiert werden.
 
-**_HINWEIS:_** Es ist möglich einen Exception-Handler für konkrete, abstrakte bzw. abgeleite Exceptions zu erstellen. Dazu muss die Methode mit `@ExceptionHandler` anntotiert sein
+**_HINWEIS:_** Es ist möglich einen Exception-Handler für konkrete, abstrakte bzw. abgeleite Exceptions zu erstellen. Dazu muss die Methode mit `@ExceptionHandler` annotiert sein
 und die Exception als Parameter besitzen.
 
 **_HINWEIS:_** Wenn der Exception-Handler von `ResponseEntityExceptionHandler` ableitet werden gängige Exception behandelt. Die Methoden können überschrieben werden, um die
