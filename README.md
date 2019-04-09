@@ -29,13 +29,49 @@ public class Pet {
 ## Aufgabenkomplex 2
 
 Dieser Aufgabenkomplex befasst sich mit der Erstellung und Fehlerbehandlung von Endpunkten mit REST-Controllern in Spring Boot. Ziel dieses Aufgabenkomplexes ist es REST-Endpunkte
-zur Interaktion mit dem Domain-Model von **Pet Store** bereitzustellen.
+zur Interaktion mit dem Domain-Model von Pet Store bereitzustellen.
 
 
 ### Aufgabe 2.1: erstelle einen REST-Controller
 
-Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden. Übergangsweise sollen die Entities `Pet` im `PetShopRestController`
+Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden. Übergangsweise soll `Pet` im `PetShopRestController`
 in einer `Map<String, Pet>` persistiert werden.
+
+```java
+@RestController
+@RequestMapping("/petshop/pets")
+public class PetShopRestController {
+    private final Map<String, Pet> pets;
+
+    public PetShopRestController() {
+        this.pets = new ConcurrentHashMap<>();
+
+        Pet klaus = Pet.builder()
+                .name("Klaus")
+                .type("Hamster")
+                .birthDay(LocalDate.of(2019, 4, 13))
+                .price(BigDecimal.valueOf(20))
+                .build();
+
+        Pet rubert = Pet.builder()
+                .name("Rubert")
+                .type("Hund")
+                .birthDay(LocalDate.of(2018, 9, 18))
+                .price(BigDecimal.valueOf(550))
+                .build();
+
+        Pet blacky = Pet.builder()
+                .name("Blacky")
+                .type("Katze")
+                .birthDay(LocalDate.of(2018, 12, 12))
+                .price(BigDecimal.valueOf(350))
+                .build();
+
+        this.pets.put(klaus.getName().toLowerCase().trim(), klaus);
+        this.pets.put(rubert.getName().toLowerCase().trim(), rubert);
+        this.pets.put(blacky.getName().toLowerCase().trim(), blacky);
+    }
+```
 
 **_DOKUMENTATION:_** [Spring Boot Web MVC](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc)
 
@@ -43,9 +79,7 @@ in einer `Map<String, Pet>` persistiert werden.
 ### Aufgabe 2.2: erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
 
 Es soll ein REST-Endpoint `GET http://<host>:<port>/petshop/pets` im `PetShopRestController` erstellt werden. Der Response-Body soll vom Typ `Collection<Pet>` und Content-Type
-`application/json` sein und im positiven Fall den HTTP-Status-Code `200` zurückgeben.
-
-***Übergangsweise soll der REST-Endpoint alle Haustiere mit `Map#values()` zurückgeben.***
+`application/json` sein und im positiven Fall den HTTP-Status-Code `200` zurückgeben. Übergangsweise soll der REST-Endpoint alle Haustiere mit `Map#values()` zurückgeben.
 
 **_HINWEIS:_** Standardmäßig wird im positiven Fall der HTTP-Status-Code `HttpStatus#OK` zurückgegeben.
 
@@ -54,7 +88,7 @@ Es soll ein REST-Endpoint `GET http://<host>:<port>/petshop/pets` im `PetShopRes
 Es soll ein REST-Endpunkt `POST http://<host>:<port>/petshop/pets` im `PetShopRestController` erstellt werden. Der Request-Body soll vom Typ `Pet` und vom Content-Type
 `application/json` sein und validiert werden. Der Response-Body soll vom Typ `Pet` und Content-Type `application/json` sein und im positiven Fall den HTTP-Status-Code `200`
 zurückgeben. Im Fehlerfall dass das Haustier mit dem Namen schon existiert soll eine `PetAlreadyExistsException` geworfen werden. Die `PetAlreadyExistsException` leitet dabei von
-der abstrakten `de.ops.springbootworkshop.application.rest.model.PetShopApiException` ab.
+der abstrakten `de.ops.springbootworkshop.application.rest.model.PetShopApiException` ab. Übergangsweise soll der REST-Endpoint ein neuen Eintrag mit `Map#put(String, Pet)` anlegen.
 
 ```java
 public abstract class PetShopApiException extends RuntimeException {
@@ -68,7 +102,6 @@ public class PetAlreadyExistsException extends PetShopApiException {
 }
 ```
 
-***Übergangsweise soll der REST-Endpoint ein neuen Eintrag mit `Map#put(String, Pet)` anlegen.***
 
 **_HINWEIS:_** Damit ein Methodenparameter als Request-Body erkannt wird muss dieser mit `@RequestBody` annotiert werden.
 
@@ -80,15 +113,13 @@ public class PetAlreadyExistsException extends PetShopApiException {
 Es soll ein REST-Endpunkt `DELETE http://<host>:<port>/petshop/pets/{name}` im `PetShopRestController` erstellt werden. Der Path-Parameter `{name}` wird übergangsweise nicht
 ausgewertet. Der Response-Body soll leer sein bzw. vom Typ `void` sein und im Positivfall den HTTP-Status-Code `204` zurückgeben. Im Fehlerfall dass das Haustier mit dem Namen
 nicht existiert soll eine `PetNotExistsException` geworfen werden. Die `PetAlreadyExistsException` leitet dabei von der abstrakten
-`de.ops.springbootworkshop.application.rest.model.PetShopApiException` ab.
+`de.ops.springbootworkshop.application.rest.model.PetShopApiException` ab. Übergangsweise soll der REST-Endpoint das Haustier mit `Map#remove(String)` entfernen.
 
 ```java
 public class PetNotExistsException extends PetShopApiException {
     // super constructors omitted
 }
 ```
-
-***Übergangsweise soll der REST-Endpoint das Haustier mit `Map#remove(String)` entfernen.***
 
 **_HINWEIS:_** Damit ein Methodenparameter als Path-Variable erkannt wird muss dieser mit `@PathVariable` annotiert werden.
 
@@ -129,7 +160,7 @@ public class ApiError {
 
 **_HINWEIS:_** Wenn eine separate Klasse zur Behandlung von Exceptions verwendet wird, dann muss diese mit `@ControllerAdvice` annotiert werden.
 
-**_HINWEIS:_** Es ist möglich einen Exception-Handler für konkrete, abstrakte bzw. abgeleite Exceptions zu erstellen. Dazu muss die Methode mit `@ExceptionHandler` annotiert sein
+**_HINWEIS:_** Es ist möglich einen Exception-Handler für konkrete, abstrakte bzw. abgeleitete Exceptions zu erstellen. Dazu muss die Methode mit `@ExceptionHandler` annotiert sein
 und die Exception als Parameter besitzen.
 
 **_HINWEIS:_** Wenn der Exception-Handler von `ResponseEntityExceptionHandler` ableitet werden gängige Exception behandelt. Die Methoden können überschrieben werden, um die
