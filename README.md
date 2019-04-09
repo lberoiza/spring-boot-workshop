@@ -1,12 +1,5 @@
 # Spring Boot Workshop 2.0
 
-## Vorausetzungen
-
-* JDK 11
-* GIT
-* IDE mit Unterstützung für Java
-* REST-Client z.B. [insomnia](https://insomnia.rest/) oder [SoapUI](https://www.soapui.org/)
-
 ## Aufgabenkomplex 1
 
 Dieser Aufgabenkomplex befasst sich mit der Initialisierung von Projekten für Spring Boot.
@@ -34,12 +27,12 @@ Initialisiere ein Projekt für Spring Boot mit Hilfe von [Spring initializr](htt
 **_HINWEIS:_** Um alle verfügbaren Dependencies anzuzeigen klick auf den Link **Dependencies > See all** im Spring initialzr.
 
 
-### Aufgabe 1.2: vertraut machen mit Projektstruktur
+### Aufgabe 1.2: vertraut machen mit Struktur des Projekts
 
 Diese Aufgabe hat das Ziel zu vermitteln wie generierte Projekte für Spring Boot aufgebaut sind. Da es sich um ein Maven Projekt handelt wird eine `pom.xml` erzeugt in der sich
 Angaben zum Artefakt, Abhängigkeiten und Build-Prozess wiederfinden. Ferner wird die Klasse `de.osp.springbootworkshop.SpringBootWorkshopApplication` generiert, welche der
 Startpunkt der Spring Boot Anwendung ist. Ebenso wird die Klasse `de.osp.springbootworkshop.SpringBootWorkshopApplicationTests` generiert. Die Testklasse besitzt nur einen leeren
-Test und dient dazu das starten der Anwendung zu testen. Im Order für Resourcen befindet sich die `src/main/resources/application.properties`, welche als zentraler Punkt für die
+Test und dient dazu das starten der Anwendung zu testen. Im Order für Ressourcen befindet sich die `src/main/resources/application.properties`, welche als zentraler Punkt für die
 Konfiguration der Anwendung fungiert.
 
 Mache dich mit der generierten Struktur des Spring Boot Projekts vertraut.
