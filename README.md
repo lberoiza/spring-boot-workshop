@@ -8,7 +8,7 @@ REST-Controller `PetShopRestController` befindet sondern in einem Domain-Service
 ### Aufgabe 3.1: erstelle Domain-Service
 
 Erstelle einen Domain-Service `de.osp.springbootworkshop.domain.service.PetShopService` mit der Domain-Logik aus `PetShopRestController`. Des weiteren sollen die Exceptions
-`PetShopApiException`, `PetAlreadyExistsException` und `PetNotExistsException` in `de.osp.springbootworkshop.domain.service` verschoben werden. Die übergangsweise Persistierung von
+`PetShopApiException`, `PetAlreadyExistsException` und `PetNotExistsException` in `de.osp.springbootworkshop.domain.service` verschoben werden. Die übergangsweise Persistenz von
 `Pet` aus `PetShopRestController` soll weiterhin verwendet werden.
 
 
