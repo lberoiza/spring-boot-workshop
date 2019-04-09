@@ -1,11 +1,5 @@
 # Spring Boot Workshop 2.0
 
-## Aufgabenkomplex 4
-
-Der Aufgabenkomplex befasst sich mit der Erstellung von Repositories für SQL in Spring Boot. Ziel dieses Aufgabenkomplexes ist die Übergangsweise Persistenz mit `Map<String, Pet>`
-aus dem Domainservice `PetShopService` in eine SQL Datenbank zu verschieben. Und das der Zugriff auf die Datenbank mit Repositories durch Spring Data erfolgt.
-
-
 ## Vorbedingungen
 
 ### erweitern des Domainmodel
@@ -72,24 +66,31 @@ public class PetType {
 
 ### initialisieren der Datenbank mit Schema
 
-Wenn es gewünscht ist, dass die Datenbank mit Schemas initialisiert wird existieren zwei Möglichkeiten. Die erste Möglichkeit besteht darin die Generierung der Tabellen anhand der
-Klassen die mit der JPA Annotation `@Entity` versehen sind abzuleiten. Wenn eine embedded Datenbank verwendet wird, dann ist standardmäßig die Generierung von DDL Skripten zur
-Initialisierung der Datenbank aktiviert. Ob und wie die Initialisierung der Datenbank stattfinden soll kann anhand diverser Properties in der `application.properties` festgelegt
-werden.
+Wenn es gewünscht ist, dass die Datenbank mit Schemas initialisiert wird existieren zwei Möglichkeiten.
+Die erste Möglichkeit besteht darin die Generierung der Tabellen anhand der
+Klassen die mit der JPA Annotation `@Entity` versehen sind abzuleiten.
+Wenn eine embedded Datenbank verwendet wird, dann ist standardmäßig die Generierung von DDL Skripten zur Initialisierung der Datenbank aktiviert.
+Ob und wie die Initialisierung der Datenbank stattfinden soll kann anhand diverser Properties in der `application.properties` festgelegt
+werden:
 
 ```properties
 spring.jpa.generate-ddl= # false or true
 spring.jpa.hibernate.ddl-auto= # none, validate, update, create or create-drop
 ```
 
-Die zweite Möglichkeit besteht darin ein SQL Skript `src/main/resources/scheme.sql` anzulegen und via DDL die Tabellen zu initialisieren.
+Die zweite Möglichkeit besteht darin ein SQL-Skript `src/main/resources/scheme.sql` anzulegen und via DDL die Tabellen zu initialisieren.
+Standardmäßig ist diese Art der Initialisierung für embdedded Datenbanken aktiviert, kann jedoch über folgendes Property in der `application.prroperties` geändert werden:
+
+```properties
+spring.datasource.initialization-mode= # never, always or embedded
+```
 
 **_DOKUMENTATION:_**
 [Spring Boot Database Initialization](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
 
 ### initialisieren der Datenbank mit Daten
 
-Wenn die Datenbank mit Daten initialisiert werden soll existiert die Möglichkeit ein SQL Skript `src/main/resources/data.sql` anzulegen und via DML die Tabellen mit Daten zu
+Wenn die Datenbank mit Daten initialisiert werden soll existiert die Möglichkeit ein SQL-Skript `src/main/resources/data.sql` anzulegen und via DML die Tabellen mit Daten zu
 befüllen.
 
 ```sql
@@ -109,8 +110,20 @@ insert into pets (name, type, birth_date, price) values
 ('Blacky', 'Katze', to_date('12.12.2018', 'dd.mm.yyyy'), 350);
 ```
 
+Standardmäßig ist diese Art der Initialisierung für embdedded Datenbanken aktiviert, kann jedoch über folgendes Property in der `application.prroperties` geändert werden:
+
+```properties
+spring.datasource.initialization-mode= # never, always or embedded
+```
+
 **_DOKUMENTATION:_**
 [Spring Boot Database Initialization](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
+
+
+## Aufgabenkomplex 4
+
+Der Aufgabenkomplex befasst sich mit der Erstellung von Repositories für SQL in Spring Boot. Ziel dieses Aufgabenkomplexes ist die Übergangsweise Persistenz mit `Map<String, Pet>`
+aus dem Domainservice `PetShopService` in eine SQL Datenbank zu verschieben. Und das der Zugriff auf die Datenbank mit Repositories durch Spring Data erfolgt.
 
 
 ### Aufgabe 4.1: aktivieren der H2 Console
@@ -171,7 +184,12 @@ Jedoch kann in der Annotation `@Query` die Angabe `nativeQuery = true` gemacht w
 
 ### Zusatzaufgabe: Testen von Repository mit Data-JPA-Test
 
+Die Query-Methode zur Abfrage von `List<Pet>` anhand deren Geburtstag soll mit einem Data-JPA-Test getestet werden.
+
 **_DOKUMENTATION:_**
 [Spring Data JPA Test](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-autoconfigured-jpa-test)
 
 **_HINWEIS:_** Das Asssertion-Framwork assertJ ist Teil der Abhängigkeit `org.springframework.boot:spring-boot-starter-test` ([assertJ](http://joel-costigliola.github.io/assertj/)).
+
+**_HINWEIS:_** Standardmäßig werden im Test-Scope die SQL-Skripte `scheme.sql` und `data.sql` ausgeführt.
+Ist dieses verhalten nicht im Test-Scope nicht gewünscht kann es in `src/test/resources/application.properties` deaktiviert werden.
