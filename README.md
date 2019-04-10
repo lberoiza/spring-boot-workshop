@@ -26,6 +26,7 @@ public class Pet {
 }
 ```
 
+
 ## Aufgabenkomplex 2
 
 Dieser Aufgabenkomplex befasst sich mit der Erstellung und Fehlerbehandlung von Endpunkten mit REST-Controllern in Spring Boot. Ziel dieses Aufgabenkomplexes ist es REST-Endpunkte
@@ -172,18 +173,19 @@ Fehlerbehandlung für die jeweilige Exception anzupassen.
 
 ### Zusatzaufgabe: erstelle und teste Web-MVC Test
 
-Es soll ein Web-MVC Test für den `PetShopRestController` erstellt werden für alle REST-Endpoints mit folgenden Szenarien:
+Der `PetShopRestController` soll hinsichtlich Funktionalität getestet werden für die folgenden Szenarien:
 
-| REST-Endpoint                                | Szenario                                                               | Erwartung                                                                                    |
-|:---------------------------------------------|:-----------------------------------------------------------------------|:---------------------------------------------------------------------------------------------|
-| `GET http://<host>:<port>/petshop/pets`      | -                                                                      | HTTP-Status-Code `HttpStatus#OK` und Content-Type `MediaType#APPLICATION_JSON_UTF8`          |
-| `POST http://<host>:<port>/petshop/pets`     | Invalider Request, es fehlen ein oder mehrere Angaben                  | HTTP-Status-Code `HttpStatus#BAD_REQUEST` und Content-Type `MediaType#APPLICATION_JSON_UTF8` |
-| `POST http://<host>:<port>/petshop/pets`     | Invalider Request, es wird ein Haustier angelegt das bereits existiert | HTTP-Status-Code `HttpStatus#BAD_REQUEST`                                                    |
-| `POST http://<host>:<port>/petshop/pets`     | Valider Request                                                        | HTTP-Status-Code `HttpStatus#OK` und Response-Body entspricht Request-Body                   |
-| `DELETE http://<host>:<port>/petshop/{name}` | Invalider Request, der Name eines Haustiers existiert nicht            | HTTP-Status-Code `HttpStatus#BAD_REQUEST`                                                    |
-| `DELETE http://<host>:<port>/petshop/{name}` | Valider Request                                                        | HTTP-Status-Code `HttpStatus#NO_CONTENT`                                                     |
 
-Zur Umsetzung der Web-MVC Tests kann folgende Vorlage verwendet werden:
+| REST-Endpoint            | Szenario                                                               | Erwartung                                                                                                        |
+|:-------------------------|:-----------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------|
+| `GET /petshop/pets`      | -                                                                      | HTTP-Status-Code `200` und Content-Type `MediaType#APPLICATION_JSON_UTF8`                                        |
+| `POST /petshop/pets`     | Invalider Request, es fehlen ein oder mehrere Angaben                  | HTTP-Status-Code `400` und Content-Type `MediaType#APPLICATION_JSON_UTF8`                                        |
+| `POST /petshop/pets`     | Invalider Request, es wird ein Haustier angelegt das bereits existiert | HTTP-Status-Code `400`                                                                                           |
+| `POST /petshop/pets`     | Valider Request                                                        | HTTP-Status-Code `200`, Content-Type `MediaType#APPLICATION_JSON_UTF8` und Response-Body entspricht Request-Body |
+| `DELETE /petshop/{name}` | Invalider Request, der Name eines Haustiers existiert nicht            | HTTP-Status-Code `400`                                                                                           |
+| `DELETE /petshop/{name}` | Valider Request                                                        | HTTP-Status-Code `204`                                                                                           |
+
+Dazu soll ein Web-MVC-Test `de.osp.springbootworkshop.application.rest.PetShopRestControllerTest` erstellt werden.
 
 ```java
 // other imports omitted
@@ -211,4 +213,4 @@ public class PetShopRestControllerTest {
 ```
 
 **_DOKUMENTATION:_**
-[RSpring Boot Web-MVC Test](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-mock-environment)
+[Spring Boot Web MVC Test](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-mock-environment)
