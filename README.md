@@ -47,7 +47,8 @@ und `health` aktiviert. Es sollen zusätzlich die REST-Endpoints `metrics` und `
 management.endpoints.web.exposure.include=health,info,metrics,beans
 ```
 
-**_DOKUMENTATION:_** Spring Boot Actuator Endpoints [Reference Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html),
+**_DOKUMENTATION:_**
+[Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html),
 [common-application-properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
 
