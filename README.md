@@ -39,8 +39,7 @@ Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopR
 in einer `Map<String, Pet>` persistiert werden.
 
 ```java
-@RestController
-@RequestMapping("/petshop/pets")
+// annotations omitted
 public class PetShopRestController {
     private final Map<String, Pet> pets;
 
@@ -141,7 +140,7 @@ Exceptions behandelt die bei fehlgeschlagenen Validierung. Für `ResponseEntity`
 werden, welcher die Fehlermeldung der behandelten Exception enthält. Der HTTP-Status-Code bzw. `HttpStatus` dabei `400` bzw. `HttpStatus#BAD_REQUEST` sein.
 
 ```java
-@ControllerAdvice
+// annotations omitted
 public class PetShopExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -195,8 +194,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(PetShopRestController.class)
+// annotations omitted
 public class PetShopRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
