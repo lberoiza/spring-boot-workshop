@@ -12,7 +12,7 @@ Erstelle einen Domain-Service `de.osp.springbootworkshop.domain.service.PetShopS
 `Pet` aus `PetShopRestController` soll weiterhin verwendet werden.
 
 
-### Aufgabe 3.2: infiziere Domain-Service in REST-Controller und delegiere API-Aufrufe
+### Aufgabe 3.2: injiziere Domain-Service in REST-Controller und delegiere API-Aufrufe
 
 Der Domain-Service `PetShopService` soll via Constructor-Injection in den `PetShopRestController` injiziert werden. Anschließend sollen die REST-Endpunkt die API vom Domain-Service
 `PetShopService verwenden`. Abschließend soll getestet werden, dass die REST-Endpunkte sich wie vor der Verschiebung der Domain-Logik verhalten.
