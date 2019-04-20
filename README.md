@@ -81,17 +81,31 @@ public class PetShopRestController {
 
 ### Aufgabe 2.2: erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
 
-Es soll ein REST-Endpoint `GET http://<host>:<port>/petshop/pets` im `PetShopRestController` erstellt werden. Der Response-Body soll vom Typ `Collection<Pet>` und Content-Type
-`application/json` sein und im positiven Fall den HTTP-Status-Code `200` zurückgeben. Übergangsweise soll der REST-Endpoint alle Haustiere mit `Map#values()` zurückgeben.
+Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Auflistung von `Pet`. Dabei sollen die temporär persistierten `Pet` mittels `Map#values()` abgefragt werden.
+
+| Angabe | Wert |
+|:---|:---|
+| Resource | `GET /petshop/pets` |
+| Request-Body | - |
+| Response-Status | `200` bzw. `HttpStatus#OK` |
+| Response-Body | `Iterable<Pet>` vom Content-Type `application/json` |
+| Exception | - |
 
 **_HINWEIS:_** Standardmäßig wird im positiven Fall der HTTP-Status-Code `HttpStatus#OK` zurückgegeben.
 
+
 ### Aufgabe 2.3: erstelle und teste REST-Endpoint zur Anlage eines Haustiers
 
-Es soll ein REST-Endpunkt `POST http://<host>:<port>/petshop/pets` im `PetShopRestController` erstellt werden. Der Request-Body soll vom Typ `Pet` und vom Content-Type
-`application/json` sein und validiert werden. Der Response-Body soll vom Typ `Pet` und Content-Type `application/json` sein und im positiven Fall den HTTP-Status-Code `200`
-zurückgeben. Im Fehlerfall dass das Haustier mit dem Namen schon existiert soll eine `PetAlreadyExistsException` geworfen werden. Die `PetAlreadyExistsException` leitet dabei von
-der abstrakten `de.ops.springbootworkshop.application.rest.model.PetShopApiException` ab. Übergangsweise soll der REST-Endpoint ein neuen Eintrag mit `Map#put(String, Pet)` anlegen.
+Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Anlage von `Pet`. Dabei soll das `Pet` temporär mittels `Map#put(String, Pet)` persistiert werden.
+
+| Angabe | Wert |
+|:---|:---|
+| Resource | `POST /petshop/pets` |
+| Request-Body | `Pet` vom Content-Type `application/json` |
+| Response-Status | `200` bzw. `HttpStatus#OK` |
+| Response-Body | `Pet`  vom Content-Type `application/json` |
+| Exception | `PetAlreadyExistsException` wenn `Pet` mit dem Namen bereits existiert |
+
 
 ```java
 public abstract class PetShopApiException extends RuntimeException {
@@ -105,7 +119,6 @@ public class PetAlreadyExistsException extends PetShopApiException {
 }
 ```
 
-
 **_HINWEIS:_** Damit ein Methodenparameter als Request-Body erkannt wird muss dieser mit `@RequestBody` annotiert werden.
 
 **_HINWEIS:_** Wenn der Request-Body validiert werden soll muss dieser mit `@Validated` annotiert werden.
@@ -113,10 +126,15 @@ public class PetAlreadyExistsException extends PetShopApiException {
 
 ### Aufgabe 2.4: erstelle und teste REST-Endpoint zur Entfernung eines Haustiers
 
-Es soll ein REST-Endpunkt `DELETE http://<host>:<port>/petshop/pets/{name}` im `PetShopRestController` erstellt werden. Der Path-Parameter `{name}` wird übergangsweise nicht
-ausgewertet. Der Response-Body soll leer sein bzw. vom Typ `void` sein und im Positivfall den HTTP-Status-Code `204` zurückgeben. Im Fehlerfall dass das Haustier mit dem Namen
-nicht existiert soll eine `PetNotExistsException` geworfen werden. Die `PetAlreadyExistsException` leitet dabei von der abstrakten
-`de.ops.springbootworkshop.application.rest.model.PetShopApiException` ab. Übergangsweise soll der REST-Endpoint das Haustier mit `Map#remove(String)` entfernen.
+Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Entfernung von `Pet`. Dabei soll das `Pet` aus der temporären Persistierung mittels `Map#remove(String)` entfernt werden.
+
+| Angabe | Wert |
+|:---|:---|
+| Resource | `DELETE /petshop/pets/{name}` |
+| Request-Body | - |
+| Response-Status | `204` bzw. `HttpStatus.NO_CONTENT` |
+| Response-Body | - |
+| Exception | `PetNotExistsException` wenn `Pet` mit dem Namen nicht existiert |
 
 ```java
 public class PetNotExistsException extends PetShopApiException {
@@ -134,22 +152,9 @@ public class PetNotExistsException extends PetShopApiException {
 
 ### Aufgabe 2.5: erstelle und teste Fehlerbehandlung
 
-Die zuvor erstellen `PetAlreadyExistsException` und `PetNotExistsException`, welche von `PetShopApiException` ableiten sollen durch einen Exception-Handler
-`de.ops.springbootworkshop.application.rest.PetShopExceptionHandler` behandelt werden. Dieser beinhaltet bereits eine Methode die mit `@ExceptionHandler` annotiert ist und
-Exceptions behandelt die bei fehlgeschlagenen Validierung. Für `ResponseEntity` soll der Response-Body `de.ops.springbootworkshop.application.rest.model.ApiError` verwendet
-werden, welcher die Fehlermeldung der behandelten Exception enthält. Der HTTP-Status-Code bzw. `HttpStatus` dabei `400` bzw. `HttpStatus#BAD_REQUEST` sein.
-
-```java
-// annotations omitted
-public class PetShopExceptionHandler extends ResponseEntityExceptionHandler {
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return new ResponseEntity<>(ApiError.of(e.getMessage()), HttpStatus.BAD_REQUEST);
-    }
-
-    // omitted custom exception handler(s)
-}
-```
+Es soll ein Exception-Handler `de.ops.springbootworkshop.application.rest.PetShopExceptionHandler` erstellt werden, welcher von `ResponseEntityExceptionHandler` ableitet. Für die
+Aufgabe soll mit `de.ops.springbootworkshop.application.rest.model.ApiError` eine einheitliche Datenstruktur zur Ausgabe von verschiedenen Fehlern verwendet werden. Der `ApiError`
+soll dabei den Fehlertext der Exception beinhalten.
 
 ```java
 public class ApiError {
@@ -158,6 +163,22 @@ public class ApiError {
     // omitted public constructor, getter, setter, equals, hashCode, toString and static factory
 }
 ```
+
+Im Exception-Handler soll die Fehlerbehandlung der Exception `MethodArgumentNotValidException` anpassen, wozu die Methode
+`handleMethodArgumentNotValid(MethodArgumentNotValidException, HttpHeaders, HttpStatus, WebRequest)` aus `ResponseEntityExceptionHandler` überschrieben werden soll.
+
+| Angabe | Wert |
+|:---|:---|
+| Response-Status | `400` bzw.`HttpStatus#BAD_REQUEST` |
+| Response-Body | `ApiError` |
+
+
+Der Exception-Handler soll um eine Fehlerbehandlung von `PetShopApiException` erweitert werden, dazu muss eine Methode implementiert und annotiert werden.
+
+| Angabe | Wert |
+|:---|:---|
+| Response-Status | `400` bzw.`HttpStatus#BAD_REQUEST` |
+| Response-Body | `ApiError` |
 
 **_DOKUMENTATION:_** [Spring Boot Web MVC Error Handling](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-error-handling)
 

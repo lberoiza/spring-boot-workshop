@@ -15,11 +15,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  */
 @ControllerAdvice
 public class PetShopExceptionHandler extends ResponseEntityExceptionHandler {
-    /**
-     * {@link HttpStatus#BAD_REQUEST}
-     * @param e
-     * @return
-     */
     @ExceptionHandler(PetShopApiException.class)
     public ResponseEntity<Object> handle(PetShopApiException e) {
         return new ResponseEntity<>(ApiError.of(e.getMessage()), HttpStatus.BAD_REQUEST);
