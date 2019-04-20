@@ -2,13 +2,12 @@
 
 ## Aufgabenkomplex 1
 
-Dieser Aufgabenkomplex befasst sich mit der Initialisierung von Projekten für Spring Boot.
+Dieser Aufgabenkomplex befasst sich mit der Initialisierung von Projekten für Spring Boot. Ziel ist es ein Maven-Projekt zu initialisieren, die Anwendung zu starten und den
+Actuator zu aufzurufen.
 
 ### Aufgabe 1.1: Initialisieren von Spring Boot Projekt
 
-Diese Aufgabe hat das Ziel zu vermitteln wie Projekte für Spring Boot initialisiert werden können.
-
-Initialisiere ein Projekt für Spring Boot mit Hilfe von [Spring initializr](https://start.spring.io/) und verwende dabei folgende Angaben:
+Es soll ein Projekt mittels [Spring initializr](https://start.spring.io/) initialisiert werden. Dabei sollen folgende Angaben verwendet werden:
 
 | Angabe                          | Wert                                                         |
 |:--------------------------------|:-------------------------------------------------------------|
@@ -29,31 +28,33 @@ Initialisiere ein Projekt für Spring Boot mit Hilfe von [Spring initializr](htt
 
 ### Aufgabe 1.2: vertraut machen mit Struktur des Projekts
 
-Diese Aufgabe hat das Ziel zu vermitteln wie generierte Projekte für Spring Boot aufgebaut sind. Da es sich um ein Maven Projekt handelt wird eine `pom.xml` erzeugt in der sich
-Angaben zum Artefakt, Abhängigkeiten und Build-Prozess wiederfinden. Ferner wird die Klasse `de.osp.springbootworkshop.SpringBootWorkshopApplication` generiert, welche der
-Startpunkt der Spring Boot Anwendung ist. Ebenso wird die Klasse `de.osp.springbootworkshop.SpringBootWorkshopApplicationTests` generiert. Die Testklasse besitzt nur einen leeren
-Test und dient dazu das starten der Anwendung zu testen. Im Order für Ressourcen befindet sich die `src/main/resources/application.properties`, welche als zentraler Punkt für die
-Konfiguration der Anwendung fungiert.
-
-Mache dich mit der generierten Struktur des Spring Boot Projekts vertraut.
+Es soll sich mit dem generierten Projekt vertraut gemacht werden. Dazu soll ein Blick in die `pom.xml` geworfen werden hinsichtlich der Angaben zu Artefakt, Abhängigkeiten und
+Build-Prozess für Spring Boot. Ferner soll ein Blick in die Hauptklasse der Spring Boot Anwendung `de.osp.springbootworkshop.SpringBootWorkshopApplication` bzw. dazu generierten
+Test `de.osp.springbootworkshop.SpringBootWorkshopApplicationTests` geworfen werden. Die Konfiguration der Spring Boot Anwendung wird durch
+`src/main/resources/application.properties` vorgenommen, welche zunächst allerdings leer ist bzw. keine standardmäßige Konfiguration überschreibt.
 
 
 ### Aufgabe 1.3: weitere Actuator Endpoints aktivieren
 
-Der Actuator verfügt Endpoints für JMX und REST. Standardmäßig sind nur einige der Endpoints für JMX und REST aktiviert. Standardmäßig sind nur die Actuator REST-Endpoints `info`
-und `health` aktiviert. Es sollen zusätzlich die REST-Endpoints `metrics` und `beans` aktiviert werden. Dafür muss die `application.properties` wie folgt bearbeitet werden:
+Es sollen für den Actuator die zusätzliche REST-Endpoints `GET /actuator/metrics` und `GET /actuator/beans` aktiviert werden. Dazu muss muss in der `application.properties`
+folgende Konfiguration vorgenommen werden:
 
 ```properties
 management.endpoints.web.exposure.include=health,info,metrics,beans
 ```
 
 **_DOKUMENTATION:_**
-[Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html),
+[Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html),
 [common-application-properties](https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html)
 
 
 ### Aufgabe 1.4: starten der Spring Boot Anwendung
 
-Standardmäßig laufen Spring Boot Anwendungen unter dem Port 8080, um dies zu ändern muss das Property `server.port=<port>` gesetzt werden. Starte die erstellte Spring Boot
-Anwendung über Maven mit `mvn spring-boot:run`. Mache dich vertraut mit den REST-Endpoints des Actuators. Eine Übersicht über die aktivierten REST-Endpoints des Actuators kann mit
-[http://localhost:8080/actuator](http://localhost:8080/actuator) eingesehen werden.
+Es sol die Spring Boot Anwendung gestartet werden, dazu muss mit Maven das Goal `mvn spring-boot:run` ausgeführt werden. Anschließend soll die Übersicht der Actuator REST-Endpunkte
+mit [http://localhost:8080/actuator](http://localhost:8080/actuator) aufgerufen werden.
+
+**_HINWEIS:_** Wenn der Port `8080` belegt ist kann in der `application.properties` mit folgender Konfiguration der Port angepasst werden:
+
+```properties
+server.port= # port of the server
+```
