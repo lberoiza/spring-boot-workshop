@@ -48,26 +48,9 @@ public class PetShopRestControllerTest {
 
     @Test
     public void testListPets() throws Exception {
-        Pet klaus = Pet.builder()
-                .name("Klaus")
-                .type("Hamster")
-                .birthDay(LocalDate.of(2019, 4, 13))
-                .price(BigDecimal.valueOf(20))
-                .build();
-
-        Pet rubert = Pet.builder()
-                .name("Rubert")
-                .type("Hund")
-                .birthDay(LocalDate.of(2018, 9, 18))
-                .price(BigDecimal.valueOf(550))
-                .build();
-
-        Pet blacky = Pet.builder()
-                .name("Blacky")
-                .type("Katze")
-                .birthDay(LocalDate.of(2018, 12, 12))
-                .price(BigDecimal.valueOf(350))
-                .build();
+        Pet klaus = new Pet("Klaus", "Hamster", LocalDate.of(2019, 4, 13), BigDecimal.valueOf(20));
+        Pet rubert = new Pet("Rubert","Hund", LocalDate.of(2018, 9, 18), BigDecimal.valueOf(550));
+        Pet blacky = new Pet("Blacky","Katze", LocalDate.of(2018, 12, 12),  BigDecimal.valueOf(350));
 
         when(service.listPets())
                 .thenReturn(Arrays.asList(klaus, rubert, blacky));
@@ -82,11 +65,7 @@ public class PetShopRestControllerTest {
 
     @Test
     public void testCreatePetWithInvalidRequest() throws Exception {
-        Pet rex = Pet.builder()
-                .name("Rex")
-                .birthDay(LocalDate.of(2018, 10, 13))
-                .price(BigDecimal.valueOf(750))
-                .build();
+        Pet rex = new Pet("Rex", null, LocalDate.of(2018, 10, 13), BigDecimal.valueOf(750));
 
         MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/petshop/pets")
                 .accept(MediaType.APPLICATION_JSON)
@@ -101,12 +80,7 @@ public class PetShopRestControllerTest {
 
     @Test
     public void testCreatePetWithValidRequest() throws Exception {
-        Pet rex = Pet.builder()
-                .name("Rex")
-                .type("Hund")
-                .birthDay(LocalDate.of(2018, 10, 13))
-                .price(BigDecimal.valueOf(750))
-                .build();
+        Pet rex = new Pet("Rex", "Hund", LocalDate.of(2018, 10, 13), BigDecimal.valueOf(750));
 
         when(service.createPet(eq(rex)))
                 .thenReturn(rex);

@@ -32,18 +32,14 @@ public class Pet {
     @DecimalMin("0.00")
     private BigDecimal price;
 
-    public Pet(String type,
-               String name,
+    public Pet(String name,
+               String type,
                LocalDate birthDay,
                BigDecimal price) {
         this.type = type;
         this.name = name;
         this.birthDay = birthDay;
         this.price = price;
-    }
-
-    public static Builder builder() {
-        return new Builder();
     }
 
     public String getType() {
@@ -102,39 +98,5 @@ public class Pet {
                 .add("birthDay=" + birthDay)
                 .add("price=" + price)
                 .toString();
-    }
-
-    public static final class Builder {
-        private String type;
-        private String name;
-        private LocalDate birthDay;
-        private BigDecimal price;
-
-        private Builder() {
-        }
-
-        public Builder type(String type) {
-            this.type = type;
-            return this;
-        }
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder birthDay(LocalDate birthDay) {
-            this.birthDay = birthDay;
-            return this;
-        }
-
-        public Builder price(BigDecimal price) {
-            this.price = price;
-            return this;
-        }
-
-        public Pet build() {
-            return new Pet(type, name, birthDay, price);
-        }
     }
 }

@@ -18,26 +18,9 @@ public class PetShopService {
     public PetShopService() {
         this.pets = new ConcurrentHashMap<>();
 
-        Pet klaus = Pet.builder()
-                .name("Klaus")
-                .type("Hamster")
-                .birthDay(LocalDate.of(2019, 4, 13))
-                .price(BigDecimal.valueOf(20))
-                .build();
-
-        Pet rubert = Pet.builder()
-                .name("Rubert")
-                .type("Hund")
-                .birthDay(LocalDate.of(2018, 9, 18))
-                .price(BigDecimal.valueOf(550))
-                .build();
-
-        Pet blacky = Pet.builder()
-                .name("Blacky")
-                .type("Katze")
-                .birthDay(LocalDate.of(2018, 12, 12))
-                .price(BigDecimal.valueOf(350))
-                .build();
+        Pet klaus = new Pet("Klaus", "Hamster", LocalDate.of(2019, 4, 13), BigDecimal.valueOf(20));
+        Pet rubert = new Pet("Rubert","Hund", LocalDate.of(2018, 9, 18), BigDecimal.valueOf(550));
+        Pet blacky = new Pet("Blacky","Katze", LocalDate.of(2018, 12, 12),  BigDecimal.valueOf(350));
 
         this.pets.put(klaus.getName().toLowerCase().trim(), klaus);
         this.pets.put(rubert.getName().toLowerCase().trim(), rubert);
