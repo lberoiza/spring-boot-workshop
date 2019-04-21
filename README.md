@@ -143,7 +143,7 @@ soll dabei den Fehlertext der Exception beinhalten.
 public class ApiError {
     private String message;
 
-    // omitted public constructor, getter, setter, equals, hashCode, toString and static factory
+    // omitted public constructor, getter, setter, equals, hashCode and toString
 }
 ```
 

@@ -51,11 +51,7 @@ public class PetShopRestControllerTest {
 
     @Test
     public void testCreatePetWithInvalidRequest() throws Exception {
-        Pet rex = Pet.builder()
-                .name("Rex")
-                .birthDay(LocalDate.of(2018, 10, 13))
-                .price(BigDecimal.valueOf(750))
-                .build();
+        Pet rex = new Pet("Rex", null, LocalDate.of(2018, 10, 13), BigDecimal.valueOf(750));
 
         MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/petshop/pets")
                 .accept(MediaType.APPLICATION_JSON)
@@ -70,12 +66,7 @@ public class PetShopRestControllerTest {
 
     @Test
     public void testCreatePetWithValidRequest() throws Exception {
-        Pet rex = Pet.builder()
-                .name("Rex")
-                .type("Hund")
-                .birthDay(LocalDate.of(2018, 10, 13))
-                .price(BigDecimal.valueOf(750))
-                .build();
+        Pet rex = new Pet("Rex", "Hund", LocalDate.of(2018, 10, 13), BigDecimal.valueOf(750));
 
         MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/petshop/pets")
                 .accept(MediaType.APPLICATION_JSON)
