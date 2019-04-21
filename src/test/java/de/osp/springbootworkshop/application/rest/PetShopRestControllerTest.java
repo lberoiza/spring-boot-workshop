@@ -9,12 +9,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -47,28 +51,20 @@ public class PetShopRestControllerTest {
         return objectMapper.writeValueAsString(o);
     }
 
+    @TestConfiguration
+    public static class MockMvcConfig {
+        @Bean
+        public MockMvc mockMvc(WebApplicationContext applicationContext) {
+            return MockMvcBuilders.webAppContextSetup(applicationContext)
+                    .build();
+        }
+    }
+
     @Test
     public void testListPets() throws Exception {
-        Pet klaus = Pet.builder()
-                .name("Klaus")
-                .type(PetType.of("Hamster"))
-                .birthDay(LocalDate.of(2019, 4, 13))
-                .price(BigDecimal.valueOf(20))
-                .build();
-
-        Pet rubert = Pet.builder()
-                .name("Rubert")
-                .type(PetType.of("Hund"))
-                .birthDay(LocalDate.of(2018, 9, 18))
-                .price(BigDecimal.valueOf(550))
-                .build();
-
-        Pet blacky = Pet.builder()
-                .name("Blacky")
-                .type(PetType.of("Katze"))
-                .birthDay(LocalDate.of(2018, 12, 12))
-                .price(BigDecimal.valueOf(350))
-                .build();
+        Pet klaus = new Pet("Klaus", new PetType("Hamster"), LocalDate.of(2019, 4, 13), BigDecimal.valueOf(20));
+        Pet rubert = new Pet("Rubert",new PetType("Hund"), LocalDate.of(2018, 9, 18), BigDecimal.valueOf(550));
+        Pet blacky = new Pet("Blacky",new PetType("Katze"), LocalDate.of(2018, 12, 12),  BigDecimal.valueOf(350));
 
         when(service.listPets())
                 .thenReturn(Arrays.asList(klaus, rubert, blacky));
@@ -83,11 +79,7 @@ public class PetShopRestControllerTest {
 
     @Test
     public void testCreatePetWithInvalidRequest() throws Exception {
-        Pet rex = Pet.builder()
-                .name("Rex")
-                .birthDay(LocalDate.of(2018, 10, 13))
-                .price(BigDecimal.valueOf(750))
-                .build();
+        Pet rex = new Pet("Rex",null, LocalDate.of(2018, 10, 13), BigDecimal.valueOf(750));
 
         MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/petshop/pets")
                 .accept(MediaType.APPLICATION_JSON)
@@ -102,12 +94,7 @@ public class PetShopRestControllerTest {
 
     @Test
     public void testCreatePetWithValidRequest() throws Exception {
-        Pet rex = Pet.builder()
-                .name("Rex")
-                .type(PetType.of("Hund"))
-                .birthDay(LocalDate.of(2018, 10, 13))
-                .price(BigDecimal.valueOf(750))
-                .build();
+        Pet rex = new Pet("Rex",new PetType("Hund"), LocalDate.of(2018, 10, 13), BigDecimal.valueOf(750));
 
         when(service.createPet(eq(rex)))
                 .thenReturn(rex);

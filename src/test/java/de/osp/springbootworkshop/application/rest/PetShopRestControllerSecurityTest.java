@@ -59,26 +59,9 @@ public class PetShopRestControllerSecurityTest {
 
     @Test
     public void testListPetsWithNoCredentials() throws Exception {
-        Pet klaus = Pet.builder()
-                .name("Klaus")
-                .type(PetType.of("Hamster"))
-                .birthDay(LocalDate.of(2019, 4, 13))
-                .price(BigDecimal.valueOf(20))
-                .build();
-
-        Pet rubert = Pet.builder()
-                .name("Rubert")
-                .type(PetType.of("Hund"))
-                .birthDay(LocalDate.of(2018, 9, 18))
-                .price(BigDecimal.valueOf(550))
-                .build();
-
-        Pet blacky = Pet.builder()
-                .name("Blacky")
-                .type(PetType.of("Katze"))
-                .birthDay(LocalDate.of(2018, 12, 12))
-                .price(BigDecimal.valueOf(350))
-                .build();
+        Pet klaus = new Pet("Klaus", new PetType("Hamster"), LocalDate.of(2019, 4, 13), BigDecimal.valueOf(20));
+        Pet rubert = new Pet("Rubert",new PetType("Hund"), LocalDate.of(2018, 9, 18), BigDecimal.valueOf(550));
+        Pet blacky = new Pet("Blacky",new PetType("Katze"), LocalDate.of(2018, 12, 12),  BigDecimal.valueOf(350));
 
         when(service.listPets())
                 .thenReturn(Arrays.asList(klaus, rubert, blacky));
@@ -93,26 +76,9 @@ public class PetShopRestControllerSecurityTest {
 
     @Test
     public void testListPetsWithInvalidCredentials() throws Exception {
-        Pet klaus = Pet.builder()
-                .name("Klaus")
-                .type(PetType.of("Hamster"))
-                .birthDay(LocalDate.of(2019, 4, 13))
-                .price(BigDecimal.valueOf(20))
-                .build();
-
-        Pet rubert = Pet.builder()
-                .name("Rubert")
-                .type(PetType.of("Hund"))
-                .birthDay(LocalDate.of(2018, 9, 18))
-                .price(BigDecimal.valueOf(550))
-                .build();
-
-        Pet blacky = Pet.builder()
-                .name("Blacky")
-                .type(PetType.of("Katze"))
-                .birthDay(LocalDate.of(2018, 12, 12))
-                .price(BigDecimal.valueOf(350))
-                .build();
+        Pet klaus = new Pet("Klaus", new PetType("Hamster"), LocalDate.of(2019, 4, 13), BigDecimal.valueOf(20));
+        Pet rubert = new Pet("Rubert",new PetType("Hund"), LocalDate.of(2018, 9, 18), BigDecimal.valueOf(550));
+        Pet blacky = new Pet("Blacky",new PetType("Katze"), LocalDate.of(2018, 12, 12),  BigDecimal.valueOf(350));
 
         when(service.listPets())
                 .thenReturn(Arrays.asList(klaus, rubert, blacky));
@@ -127,26 +93,9 @@ public class PetShopRestControllerSecurityTest {
 
     @Test
     public void testListPetsWithInvalidRole() throws Exception {
-        Pet klaus = Pet.builder()
-                .name("Klaus")
-                .type(PetType.of("Hamster"))
-                .birthDay(LocalDate.of(2019, 4, 13))
-                .price(BigDecimal.valueOf(20))
-                .build();
-
-        Pet rubert = Pet.builder()
-                .name("Rubert")
-                .type(PetType.of("Hund"))
-                .birthDay(LocalDate.of(2018, 9, 18))
-                .price(BigDecimal.valueOf(550))
-                .build();
-
-        Pet blacky = Pet.builder()
-                .name("Blacky")
-                .type(PetType.of("Katze"))
-                .birthDay(LocalDate.of(2018, 12, 12))
-                .price(BigDecimal.valueOf(350))
-                .build();
+        Pet klaus = new Pet("Klaus", new PetType("Hamster"), LocalDate.of(2019, 4, 13), BigDecimal.valueOf(20));
+        Pet rubert = new Pet("Rubert",new PetType("Hund"), LocalDate.of(2018, 9, 18), BigDecimal.valueOf(550));
+        Pet blacky = new Pet("Blacky",new PetType("Katze"), LocalDate.of(2018, 12, 12),  BigDecimal.valueOf(350));
 
         when(service.listPets())
                 .thenReturn(Arrays.asList(klaus, rubert, blacky));
