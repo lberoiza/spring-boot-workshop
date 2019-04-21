@@ -2,22 +2,6 @@
 
 ## Vorbedingungen
 
-### erweitern des Domain-Model
-
-Das Domain-Model wird erweitert um `PetType`, welches sich unter `de.osp.springbootworkshop.domain.model` befindet.
-
-```java
-public class PetType {
-    @NotNull
-    @NotEmpty
-    private String name;
-
-    // omitted public no args constructor, getter, setter, equals, hashCode, toString and optionally builder
-}
-```
-
-### JPA im Domain-Model verwenden
-
 Damit `Pet` und `PetType` als Entity mit JPA verwendet werden können müssen diese mit diversen Annotationen versehen werden.
 
 ```java
@@ -64,31 +48,15 @@ public class PetType {
 }
 ```
 
-### initialisieren der Datenbank mit Schema
+## Aufgabenkomplex 4
 
-Wenn es gewünscht ist, dass die Datenbank mit Schemas initialisiert wird existieren zwei Möglichkeiten. Die erste Möglichkeit besteht darin die Generierung der Tabellen anhand der
-Klassen die mit der JPA Annotation `@Entity` versehen sind abzuleiten. Wenn eine embedded Datenbank verwendet wird, dann ist standardmäßig die Generierung von DDL Skripten zur
-Initialisierung der Datenbank aktiviert. Ob und wie die Initialisierung der Datenbank stattfinden soll kann anhand diverser Properties in der `application.properties` festgelegt
-werden:
+Der Aufgabenkomplex befasst sich mit der Erstellung von Repositories für SQL in Spring Boot. Ziel dieses Aufgabenkomplexes ist die Übergangsweise Persistenz mit `Map<String, Pet>`
+aus dem Domain-Service `PetShopService` in eine SQL Datenbank zu verschieben. Und das der Zugriff auf die Datenbank mit Repositories durch Spring Data erfolgt.
 
-```properties
-spring.jpa.generate-ddl= # false or true
-spring.jpa.hibernate.ddl-auto= # none, validate, update, create or create-drop
-```
 
-Die zweite Möglichkeit besteht darin ein SQL-Skript `src/main/resources/scheme.sql` anzulegen und via DDL die Tabellen zu initialisieren. Standardmäßig ist diese Art der
-Initialisierung für embedded Datenbanken aktiviert, kann jedoch über folgendes Property in der `application.properties` geändert werden:
+### Aufgabe 4.1: initialisiere Datenbank mit Daten
 
-```properties
-spring.datasource.initialization-mode= # never, always or embedded
-```
-
-**_DOKUMENTATION:_**
-[Spring Boot Database Initialization](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
-
-### initialisieren der Datenbank mit Daten
-
-Wenn die Datenbank mit Daten initialisiert werden soll existiert die Möglichkeit ein SQL-Skript `src/main/resources/data.sql` anzulegen und via DML die Tabellen mit Daten zu
+Die SQL Datenbank H2 soll zum Start der Anwendung mit Daten initialisiert werden. Dazu muss ein SQL `src/main/resources/data.sql` erstellt werden.
 befüllen.
 
 ```sql
@@ -108,23 +76,18 @@ insert into pets (name, type, birth_date, price) values
 ('Blacky', 'Katze', to_date('12.12.2018', 'dd.mm.yyyy'), 350);
 ```
 
-Standardmäßig ist diese Art der Initialisierung für embdedded Datenbanken aktiviert, kann jedoch über folgendes Property in der `application.properties` geändert werden:
+Damit in der Anwendung SQL-Statements geloggt werden müssen in der `application.properties` folgende Properties ergänzt werden. 
 
 ```properties
-spring.datasource.initialization-mode= # never, always or embedded
+spring.jpa.show-sql=true # log SQL statements
+spring.jpa.properties.hibernate.format_sql=true # log SQL statements with formatted values
 ```
 
 **_DOKUMENTATION:_**
 [Spring Boot Database Initialization](https://docs.spring.io/spring-boot/docs/current/reference/html/howto-database-initialization.html#howto-database-initialization)
 
 
-## Aufgabenkomplex 4
-
-Der Aufgabenkomplex befasst sich mit der Erstellung von Repositories für SQL in Spring Boot. Ziel dieses Aufgabenkomplexes ist die Übergangsweise Persistenz mit `Map<String, Pet>`
-aus dem Domain-Service `PetShopService` in eine SQL Datenbank zu verschieben. Und das der Zugriff auf die Datenbank mit Repositories durch Spring Data erfolgt.
-
-
-### Aufgabe 4.1: aktivieren der H2 Console
+### Aufgabe 4.2: aktivieren der H2 Console
 
 Im Workshop wird H2 als Embedded SQL Datenbank verwendet. Im Aufgabenkomplex 1 wurde bei den Abhängigkeiten die H2 Datenbank aus der Kategorie SQL ausgewählt. Diese Abhängigkeit
 findet sich in der `pom.xml` des Projekts wieder als `com.h2database:h2`. Um sich mit der Datenbank via Browser verbinden zu können muss zunächst die H2 Console in den
@@ -135,7 +98,7 @@ spring.h2.console.enabled=true
 spring.h2.console.path=/h2-console
 ```
 
-Nach dem Start der Spring Boot Anwendung ist die H2 Console unter [http://localhost:8080/h2-console]( http://localhost:8080/actuator) und man kann sich mit folgenden Anmeldedaten
+Nach dem Start der Anwendung ist die H2 Console unter [http://localhost:8080/h2-console]( http://localhost:8080/h2-console) verfügbar und man kann sich mit folgenden Anmeldedaten
 gegen die Datenbank verbinden:
 
 | Bezeichnung  | Wert                 |
@@ -145,19 +108,12 @@ gegen die Datenbank verbinden:
 | User Name    | sa                   |
 | Password     | -                    |
 
-Die Tabellen `pets` und `pet_types` sollten angelegt sein. Für letztere sollten bereits Daten existieren.
+Die Tabellen `pets` und `pet_types` sollten angelegt sein und die zuvor mit `data.sql` beschriebenen SQL-DML-Statements ausgeführt worden sein.
 
 **_DOKUMENTATION:_** [Spring Boot H2 Web Console](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-sql.html#boot-features-sql-h2-console)
 
-**_HINWEIS:_** Um SQL-Statements im Log der Spring Boot Anwendung sehen zu können müssen zwei Properties in `application.properties` gesetzt werden:
 
-```properties
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-```
-
-
-### Aufgabe 4.2: implementiere ein Repository
+### Aufgabe 4.3: implementiere ein Repository
 
 Es soll ein Repository `de.osp.springbootworkshop.domain.repository.PetRepository` für das Entity `Pet` umgesetzt werden. Dabei soll `PetRepository` als Interface implementiert
 werden und von dem Interface `CrudRepository<T,ID>` ableiten.
@@ -166,7 +122,7 @@ werden und von dem Interface `CrudRepository<T,ID>` ableiten.
 [CrudRepository Java Doc](https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html)
 
 
-### Aufgabe 4.3: erweitern von Repository mit eigenen Queries
+### Aufgabe 4.4: erweitern von Repository mit eigenen Queries
 
 Das Repository `PetRepository` soll um eine Methode zur Abfrage einer `List<Pet>` anhand deren Geburtstag erweitert werden. Wahlweise kann die Umsetzung des Queries durch den
 Methodennamen oder durch die Annotation `@Query` erfolgen.
