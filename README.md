@@ -36,6 +36,37 @@ spring.security.user.name=
 spring.security.user.password=
 ```
 
+Der `PetShopRestControllerTest` muss angepasst werden:
+
+```java
+// annotations omitted
+public class PetShopRestControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    @MockBean
+    private PetShopService service;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private String toJSON(Object o) throws Exception {
+        return objectMapper.writeValueAsString(o);
+    }
+
+    @TestConfiguration
+    public static class MockMvcConfig {
+        @Bean
+        public MockMvc mockMvc(WebApplicationContext applicationContext) {
+            return MockMvcBuilders.webAppContextSetup(applicationContext)
+                    .build();
+        }
+    }
+    
+    // test methods omitted   
+}
+```
 
 ## Aufgabenkomplex 5
 
