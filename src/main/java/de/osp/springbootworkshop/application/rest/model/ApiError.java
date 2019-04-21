@@ -12,10 +12,6 @@ public class ApiError {
         this.message = message;
     }
 
-    public static ApiError of(String message) {
-        return new ApiError(message);
-    }
-
     public String getMessage() {
         return message;
     }
