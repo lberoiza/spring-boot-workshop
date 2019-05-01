@@ -1,53 +1,5 @@
 # Spring Boot Workshop 2.0
 
-## Vorbedingungen
-
-Damit `Pet` und `PetType` als Entity mit JPA verwendet werden können müssen diese mit diversen Annotationen versehen werden.
-
-```java
-@Entity
-@Table(name = "pets")
-@Validated
-public class Pet {
-    @Id
-    @NotNull
-    @NotEmpty
-    private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "type", nullable = false)
-    @NotNull
-    private PetType type;
-
-    @Column(name = "birth_date", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
-    private LocalDate birthDay;
-
-    @Column(name ="price", nullable = false, columnDefinition = "DECIMAL(6,2)")
-    @NotNull
-    @Digits(integer = 6, fraction = 2)
-    @DecimalMin("0.00")
-    private BigDecimal price;
-
-    // omitted public no args constructor, getter, setter, equals, hashCode and toString
-}
-```
-
-```java
-@Entity
-@Table(name = "pet_types")
-@Validated
-public class PetType {
-    @Id
-    @NotNull
-    @NotEmpty
-    private String name;
-
-    // omitted public no args constructor, getter, setter, equals, hashCode and toString
-}
-```
-
 ## Aufgabenkomplex 4
 
 Der Aufgabenkomplex befasst sich mit der Erstellung von Repositories für SQL in Spring Boot. Ziel dieses Aufgabenkomplexes ist die Übergangsweise Persistenz mit `Map<String, Pet>`
