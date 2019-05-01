@@ -14,10 +14,10 @@ Der Workshop soll wesentliche Inhalte zur Erstellung eines Microservice mit Spri
 Tierhandlung erstellt werden. Der Inhalt des Workshops gliedert sich in Aufgabenkomplexe, die in Branches untergliedert sind:
 
 
-| Aufgabenkomplex | Branch | Kurzbeschreibung |
-|:---|:---|:---|
-| Aufgabenkomplex 1 | `Aufgabenkomplex1` | Es wird ein Projekt mit dem Spring initialzr erstellt und anschließend die Anwendung ausgeführt. |
-| Aufgabenkomplex 2 | `Aufgabenkomplex2` | Die Anwendung wird um eine REST-API, einschließlich Fehlerbehandlung, erweitert. |
-| Aufgabenkomplex 3 | `Aufgabenkomplex3` | Die Anwendung wird um ein Domain-Service erweitert. |
-| Aufgabenkomplex 4 | `Aufgabenkomplex4` | Die Anwendung wird um eine Persistierung mit der SQL-Datenbank H2 erweitert. |
-| Aufgabenkomplex 5 | `Aufgabenkomplex5` | Die Anwendung wird um eine Absicherung der REST-API erweitert. |
+| Aufgabenkomplex   | Branch                                         | Kurzbeschreibung                                                                                 |
+|:------------------|:-----------------------------------------------|:-------------------------------------------------------------------------------------------------|
+| Aufgabenkomplex 1 | `Aufgabenkomplex1_loesung`                     | Es wird ein Projekt mit dem Spring initialzr erstellt und anschließend die Anwendung ausgeführt. |
+| Aufgabenkomplex 2 | `Aufgabenkomplex2`, `Aufgabenkomplex2_loesung` | Die Anwendung wird um eine REST-API, einschließlich Fehlerbehandlung, erweitert.                 |
+| Aufgabenkomplex 3 | `Aufgabenkomplex3`, `Aufgabenkomplex3_loesung` | Die Anwendung wird um ein Domain-Service erweitert.                                              |
+| Aufgabenkomplex 4 | `Aufgabenkomplex4`, `Aufgabenkomplex4_loesung` | Die Anwendung wird um eine Persistierung mit der SQL-Datenbank H2 erweitert.                     |
+| Aufgabenkomplex 5 | `Aufgabenkomplex5`, `Aufgabenkomplex5_loesung` | Die Anwendung wird um eine Absicherung der REST-API erweitert.                                   |
