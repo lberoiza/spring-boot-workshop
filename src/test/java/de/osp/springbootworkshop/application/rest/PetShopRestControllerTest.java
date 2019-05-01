@@ -6,11 +6,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,6 +39,15 @@ public class PetShopRestControllerTest {
 
     private String toJSON(Object o) throws Exception {
         return objectMapper.writeValueAsString(o);
+    }
+
+    @TestConfiguration
+    public static class MockMvcConfig {
+        @Bean
+        public MockMvc mockMvc(WebApplicationContext applicationContext) {
+            return MockMvcBuilders.webAppContextSetup(applicationContext)
+                    .build();
+        }
     }
 
     @Test

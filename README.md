@@ -209,6 +209,15 @@ public class PetShopRestControllerTest {
     private String toJSON(Object o) {
         return objectMapper.writeValueAsString(o);
     }
+    
+    @TestConfiguration
+    public static class MockMvcConfig {
+        @Bean
+        public MockMvc mockMvc(WebApplicationContext applicationContext) {
+            return MockMvcBuilders.webAppContextSetup(applicationContext)
+                    .build();
+        }
+    }
 
     // tests omitted
 }
