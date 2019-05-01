@@ -1,32 +1,5 @@
 # Spring Boot Workshop 2.0
 
-### Vorbedingungen
-
-Das Domain-Model besteht zunächst nur aus der Entity `Pet`, welches sich unter `de.osp.springbootworkshop.domain.model` befindet.
-
-```java
-public class Pet {
-    @NotNull
-    @NotEmpty
-    private String name;
-
-    @NotNull
-    @NotEmpty
-    private String type;
-
-    @NotNull
-    private LocalDate birthDay;
-
-    @NotNull
-    @Digits(integer = 6, fraction = 2)
-    @DecimalMin("0.00")
-    private BigDecimal price;
-
-    // omitted public no args constructor, getter, setter, equals, hashCode and toString
-}
-```
-
-
 ## Aufgabenkomplex 2
 
 Dieser Aufgabenkomplex befasst sich mit der Erstellung und Fehlerbehandlung von Endpunkten mit REST-Controllern in Spring Boot. Ziel dieses Aufgabenkomplexes ist es REST-Endpunkte
@@ -59,20 +32,20 @@ public class PetShopRestController {
 }
 ```
 
-**_DOKUMENTATION:_** [Spring Boot Web MVC](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc)
+**_DOKUMENTATION:_** [Spring Boot Web MVC](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc)
 
 
 ### Aufgabe 2.2: erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
 
 Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Auflistung von `Pet`. Dabei sollen die temporär persistierten `Pet` mittels `Map#values()` abgefragt werden.
 
-| Angabe | Wert |
-|:---|:---|
-| Resource | `GET /petshop/pets` |
-| Request-Body | - |
-| Response-Status | `200` bzw. `HttpStatus#OK` |
-| Response-Body | `Iterable<Pet>` vom Content-Type `application/json` |
-| Exception | - |
+| Angabe          | Wert                                                |
+|:----------------|:----------------------------------------------------|
+| Resource        | `GET /petshop/pets`                                 |
+| Request-Body    | -                                                   |
+| Response-Status | `200` bzw. `HttpStatus#OK`                          |
+| Response-Body   | `Iterable<Pet>` vom Content-Type `application/json` |
+| Exception       | -                                                   |
 
 **_HINWEIS:_** Standardmäßig wird im positiven Fall der HTTP-Status-Code `HttpStatus#OK` zurückgegeben.
 
@@ -81,13 +54,13 @@ Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Auflist
 
 Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Anlage von `Pet`. Dabei soll das `Pet` temporär mittels `Map#put(String, Pet)` persistiert werden.
 
-| Angabe | Wert |
-|:---|:---|
-| Resource | `POST /petshop/pets` |
-| Request-Body | `Pet` vom Content-Type `application/json` |
-| Response-Status | `200` bzw. `HttpStatus#OK` |
-| Response-Body | `Pet`  vom Content-Type `application/json` |
-| Exception | `PetAlreadyExistsException` wenn `Pet` mit dem Namen bereits existiert |
+| Angabe          | Wert                                                                   |
+|:----------------|:-----------------------------------------------------------------------|
+| Resource        | `POST /petshop/pets`                                                   |
+| Request-Body    | `Pet` vom Content-Type `application/json`                              |
+| Response-Status | `200` bzw. `HttpStatus#OK`                                             |
+| Response-Body   | `Pet`  vom Content-Type `application/json`                             |
+| Exception       | `PetAlreadyExistsException` wenn `Pet` mit dem Namen bereits existiert |
 
 
 ```java
@@ -111,13 +84,13 @@ public class PetAlreadyExistsException extends PetShopApiException {
 
 Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Entfernung von `Pet`. Dabei soll das `Pet` aus der temporären Persistierung mittels `Map#remove(String)` entfernt werden.
 
-| Angabe | Wert |
-|:---|:---|
-| Resource | `DELETE /petshop/pets/{name}` |
-| Request-Body | - |
-| Response-Status | `204` bzw. `HttpStatus.NO_CONTENT` |
-| Response-Body | - |
-| Exception | `PetNotExistsException` wenn `Pet` mit dem Namen nicht existiert |
+| Angabe          | Wert                                                             |
+|:----------------|:-----------------------------------------------------------------|
+| Resource        | `DELETE /petshop/pets/{name}`                                    |
+| Request-Body    | -                                                                |
+| Response-Status | `204` bzw. `HttpStatus.NO_CONTENT`                               |
+| Response-Body   | -                                                                |
+| Exception       | `PetNotExistsException` wenn `Pet` mit dem Namen nicht existiert |
 
 ```java
 public class PetNotExistsException extends PetShopApiException {
@@ -150,20 +123,20 @@ public class ApiError {
 Im Exception-Handler soll die Fehlerbehandlung der Exception `MethodArgumentNotValidException` anpassen, wozu die Methode
 `handleMethodArgumentNotValid(MethodArgumentNotValidException, HttpHeaders, HttpStatus, WebRequest)` aus `ResponseEntityExceptionHandler` überschrieben werden soll.
 
-| Angabe | Wert |
-|:---|:---|
+| Angabe          | Wert                               |
+|:----------------|:-----------------------------------|
 | Response-Status | `400` bzw.`HttpStatus#BAD_REQUEST` |
-| Response-Body | `ApiError` |
+| Response-Body   | `ApiError`                         |
 
 
 Der Exception-Handler soll um eine Fehlerbehandlung von `PetShopApiException` erweitert werden, dazu muss eine Methode implementiert und annotiert werden.
 
-| Angabe | Wert |
-|:---|:---|
+| Angabe          | Wert                               |
+|:----------------|:-----------------------------------|
 | Response-Status | `400` bzw.`HttpStatus#BAD_REQUEST` |
-| Response-Body | `ApiError` |
+| Response-Body   | `ApiError`                         |
 
-**_DOKUMENTATION:_** [Spring Boot Web MVC Error Handling](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-error-handling)
+**_DOKUMENTATION:_** [Spring Boot Web MVC Error Handling](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-error-handling)
 
 **_HINWEIS:_** Wenn eine separate Klasse zur Behandlung von Exceptions verwendet wird, dann muss diese mit `@ControllerAdvice` annotiert werden.
 
@@ -209,7 +182,7 @@ public class PetShopRestControllerTest {
     private String toJSON(Object o) {
         return objectMapper.writeValueAsString(o);
     }
-    
+
     @TestConfiguration
     public static class MockMvcConfig {
         @Bean
@@ -224,4 +197,4 @@ public class PetShopRestControllerTest {
 ```
 
 **_DOKUMENTATION:_**
-[Spring Boot Web MVC Test](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-mock-environment)
+[Spring Boot Web MVC Test](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-testing.html#boot-features-testing-spring-boot-applications-testing-with-mock-environment)
