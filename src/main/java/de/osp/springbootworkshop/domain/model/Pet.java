@@ -1,7 +1,9 @@
 package de.osp.springbootworkshop.domain.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
@@ -14,26 +16,36 @@ import java.util.StringJoiner;
 /**
  * @author Denny
  */
+@Entity
+@Table(name = "pets")
 @Validated
 public class Pet {
+    @Id
     @NotNull
     @NotEmpty
     private String name;
 
+    @ManyToOne
+    @JoinColumn(name = "type", nullable = false)
     @NotNull
-    @NotEmpty
-    private String type;
+    private PetType type;
 
+    @Column(name = "birth_date", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     private LocalDate birthDay;
 
+    @Column(name ="price", nullable = false, columnDefinition = "DECIMAL(6,2)")
     @NotNull
     @Digits(integer = 6, fraction = 2)
     @DecimalMin("0.00")
     private BigDecimal price;
 
+    public Pet() {
+    }
+
     public Pet(String name,
-               String type,
+               PetType type,
                LocalDate birthDay,
                BigDecimal price) {
         this.type = type;
@@ -42,11 +54,11 @@ public class Pet {
         this.price = price;
     }
 
-    public String getType() {
+    public PetType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(PetType type) {
         this.type = type;
     }
 
