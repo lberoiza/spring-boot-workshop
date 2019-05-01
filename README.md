@@ -20,7 +20,7 @@ Es soll ein Projekt mittels [Spring initializr](https://start.spring.io/) initi
 | Project Metadata > Description  | **wird automatisch erzeugt**                                 |
 | Project Metadata > Package Name | **wird automatisch erzeugt**                                 |
 | Project Metadata > Packing      | JAR                                                          |
-| Project Metadata > Java Version | 11                                                           |
+| Project Metadata > Java Version | 8                                                           |
 | Dependencies                    | Web *\[Web\]*, JPA *\[SQL\]* H2 *\[SQL\]* Actuator *\[Ops\]* |
 
 **_HINWEIS:_** Um alle verfügbaren Dependencies anzuzeigen klick auf den Link **Dependencies > See all** im Spring initialzr.
