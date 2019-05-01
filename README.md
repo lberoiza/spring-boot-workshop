@@ -16,7 +16,7 @@ Tierhandlung erstellt werden. Der Inhalt des Workshops gliedert sich in Aufgaben
 
 | Aufgabenkomplex   | Branch                                         | Kurzbeschreibung                                                                                 |
 |:------------------|:-----------------------------------------------|:-------------------------------------------------------------------------------------------------|
-| Aufgabenkomplex 1 | `Aufgabenkomplex1_loesung`                     | Es wird ein Projekt mit dem Spring initialzr erstellt und anschließend die Anwendung ausgeführt. |
+| Aufgabenkomplex 1 | `Aufgabenkomplex1`, `Aufgabenkomplex1_loesung` | Es wird ein Projekt mit dem Spring initialzr erstellt und anschließend die Anwendung ausgeführt. |
 | Aufgabenkomplex 2 | `Aufgabenkomplex2`, `Aufgabenkomplex2_loesung` | Die Anwendung wird um eine REST-API, einschließlich Fehlerbehandlung, erweitert.                 |
 | Aufgabenkomplex 3 | `Aufgabenkomplex3`, `Aufgabenkomplex3_loesung` | Die Anwendung wird um ein Domain-Service erweitert.                                              |
 | Aufgabenkomplex 4 | `Aufgabenkomplex4`, `Aufgabenkomplex4_loesung` | Die Anwendung wird um eine Persistierung mit der SQL-Datenbank H2 erweitert.                     |
