@@ -2,14 +2,16 @@
 
 ## Aufgabenkomplex 2
 
-Dieser Aufgabenkomplex befasst sich mit der Erstellung und Fehlerbehandlung von Endpunkten mit REST-Controllern in Spring Boot. Ziel dieses Aufgabenkomplexes ist es REST-Endpunkte
-zur Interaktion mit dem Domain-Model von Pet Store bereitzustellen.
+Dieser Aufgabenkomplex befasst sich mit der Erstellung und Fehlerbehandlung von Endpunkten mit REST-Controllern in 
+Spring Boot. Ziel dieses Aufgabenkomplexes ist es, REST-Endpunkte zur Interaktion mit dem Domain-Model 
+einer Tierhandlung ("Pet Store") bereitzustellen.
 
 
-### Aufgabe 2.1: erstelle einen REST-Controller
+### Aufgabe 2.1: Erstelle einen REST-Controller
 
-Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden. Übergangsweise soll `de.osp.springbootworkshop.domain.model.Pet` im `PetShopRestController`
-in einer `Map<String, Pet>` persistiert werden.
+Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden. Da wir 
+aktuell noch keine Datenbank zur Verfügung haben, soll unsere Entität `de.osp.springbootworkshop.domain.model.Pet` 
+zunächst in einer `Map<String, Pet>` persistiert werden:
 
 ```java
 // annotations omitted
@@ -35,9 +37,10 @@ public class PetShopRestController {
 **_DOKUMENTATION:_** [Spring Boot Web MVC](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc)
 
 
-### Aufgabe 2.2: erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
+### Aufgabe 2.2: Erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
 
-Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Auflistung von `Pet`. Dabei sollen die temporär persistierten `Pet` mittels `Map#values()` abgefragt werden.
+Es soll ein REST-Endpoint zur Auflistung von `Pet` erstellt werden. Dabei sollen die temporär persistierten `Pet` 
+mittels `Map#values()` zurückgegeben werden.
 
 | Angabe          | Wert                                                |
 |:----------------|:----------------------------------------------------|
@@ -49,10 +52,12 @@ Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Auflist
 
 **_HINWEIS:_** Standardmäßig wird im positiven Fall der HTTP-Status-Code `HttpStatus#OK` zurückgegeben.
 
+Teste den neuen Endpunkt mittels SoapUI oder einem Browser.
 
-### Aufgabe 2.3: erstelle und teste REST-Endpoint zur Anlage eines Haustiers
+### Aufgabe 2.3: Erstelle und teste REST-Endpoint zur Anlage eines Haustiers
 
-Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Anlage von `Pet`. Dabei soll das `Pet` temporär mittels `Map#put(String, Pet)` persistiert werden.
+Es soll ein REST-Endpoint zur Anlage von `Pet` erstellt werden. Dabei soll das `Pet` temporär 
+mittels `Map#put(String, Pet)` persistiert werden.
 
 | Angabe          | Wert                                                                   |
 |:----------------|:-----------------------------------------------------------------------|
