@@ -2,14 +2,16 @@
 
 ## Aufgabenkomplex 2
 
-Dieser Aufgabenkomplex befasst sich mit der Erstellung und Fehlerbehandlung von Endpunkten mit REST-Controllern in Spring Boot. Ziel dieses Aufgabenkomplexes ist es REST-Endpunkte
-zur Interaktion mit dem Domain-Model von Pet Store bereitzustellen.
+Dieser Aufgabenkomplex befasst sich mit der Erstellung und Fehlerbehandlung von Endpunkten mit REST-Controllern in 
+Spring Boot. Ziel dieses Aufgabenkomplexes ist es, REST-Endpunkte zur Interaktion mit dem Domain-Model 
+einer Tierhandlung ("Pet Store") bereitzustellen.
 
 
-### Aufgabe 2.1: erstelle einen REST-Controller
+### Aufgabe 2.1: Erstelle einen REST-Controller
 
-Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden. Übergangsweise soll `Pet` im `PetShopRestController`
-in einer `Map<String, Pet>` persistiert werden.
+Es soll ein REST-Controller `de.osp.springbootworkshop.application.rest.PetShopRestController` angelegt werden. Da wir 
+aktuell noch keine Datenbank zur Verfügung haben, soll unsere Entität `de.osp.springbootworkshop.domain.model.Pet` 
+zunächst in einer `Map<String, Pet>` persistiert werden:
 
 ```java
 // annotations omitted
@@ -35,9 +37,10 @@ public class PetShopRestController {
 **_DOKUMENTATION:_** [Spring Boot Web MVC](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc)
 
 
-### Aufgabe 2.2: erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
+### Aufgabe 2.2: Erstelle und teste REST-Endpoint zur Auflistung aller Haustiers
 
-Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Auflistung von `Pet`. Dabei sollen die temporär persistierten `Pet` mittels `Map#values()` abgefragt werden.
+Es soll ein REST-Endpoint zur Auflistung von `Pet` erstellt werden. Dabei sollen die temporär persistierten `Pet` 
+mittels `Map#values()` zurückgegeben werden.
 
 | Angabe          | Wert                                                |
 |:----------------|:----------------------------------------------------|
@@ -49,10 +52,13 @@ Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Auflist
 
 **_HINWEIS:_** Standardmäßig wird im positiven Fall der HTTP-Status-Code `HttpStatus#OK` zurückgegeben.
 
+Teste den neuen Endpunkt mittels SoapUI oder einem Browser.
 
-### Aufgabe 2.3: erstelle und teste REST-Endpoint zur Anlage eines Haustiers
+### Aufgabe 2.3: Erstelle und teste REST-Endpoint zur Anlage eines Haustiers
 
-Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Anlage von `Pet`. Dabei soll das `Pet` temporär mittels `Map#put(String, Pet)` persistiert werden.
+Es soll ein REST-Endpoint zur Anlage von `Pet` erstellt werden. Dabei soll das `Pet` temporär 
+mittels `Map#put(String, Pet)` persistiert werden. Der Endpoint soll eine Exception werfen,
+wenn bereits ein Haustier mit dem gleichen Namen existiert.
 
 | Angabe          | Wert                                                                   |
 |:----------------|:-----------------------------------------------------------------------|
@@ -80,9 +86,11 @@ public class PetAlreadyExistsException extends PetShopApiException {
 **_HINWEIS:_** Wenn der Request-Body validiert werden soll muss dieser mit `@Validated` annotiert werden.
 
 
-### Aufgabe 2.4: erstelle und teste REST-Endpoint zur Entfernung eines Haustiers
+### Aufgabe 2.4: Erstelle und teste REST-Endpoint zur Entfernung eines Haustiers
 
-Es soll ein REST-Endpoint erstellt werden im `PetShopRestController` zur Entfernung von `Pet`. Dabei soll das `Pet` aus der temporären Persistierung mittels `Map#remove(String)` entfernt werden.
+Es soll ein REST-Endpoint zur Entfernung von `Pet` erstellt werden. Dabei soll das `Pet` aus der temporären 
+Persistierung mittels `Map#remove(String)` entfernt werden. Der Endpoint soll eine Exception werfen,
+wenn kein Haustier unter dem angegebenen Namen existiert.
 
 | Angabe          | Wert                                                             |
 |:----------------|:-----------------------------------------------------------------|
@@ -98,19 +106,21 @@ public class PetNotExistsException extends PetShopApiException {
 }
 ```
 
-**_HINWEIS:_** Damit ein Methodenparameter als Path-Variable erkannt wird muss dieser mit `@PathVariable` annotiert werden.
+**_HINWEIS:_** Damit ein Methodenparameter als Path-Variable erkannt wird, muss dieser mit `@PathVariable` annotiert werden.
 
 **_HINWEIS:_** Standardmäßig werden Path-Variablen auf gleichnamige Methodenparameter gemappt.
 
-**_HINWEIS:_** Damit im positiven Fall ein HTTP-Status-Code abweichend zu `HttpStatus#OK` zurückgegeben werden kann muss die Methode mit `@ResponseStatus` annotiert werden. Die Klasse
-`HttpStatus` besitzt die entsprechenden Konstanten für die HTTP-Status-Codes.
+**_HINWEIS:_** Damit im positiven Fall ein HTTP-Status-Code abweichend zu `HttpStatus#OK` zurückgegeben werden kann, 
+muss die Methode mit `@ResponseStatus` annotiert werden. Die Klasse `HttpStatus` besitzt die entsprechenden Konstanten 
+für die HTTP-Status-Codes.
 
 
-### Aufgabe 2.5: erstelle und teste Fehlerbehandlung
+### Aufgabe 2.5: Erstelle und teste Fehlerbehandlung
 
-Es soll ein Exception-Handler `de.ops.springbootworkshop.application.rest.PetShopExceptionHandler` erstellt werden, welcher von `ResponseEntityExceptionHandler` ableitet. Für die
-Aufgabe soll mit `de.ops.springbootworkshop.application.rest.model.ApiError` eine einheitliche Datenstruktur zur Ausgabe von verschiedenen Fehlern verwendet werden. Der `ApiError`
-soll dabei den Fehlertext der Exception beinhalten.
+Es soll ein Exception-Handler `de.ops.springbootworkshop.application.rest.PetShopExceptionHandler` erstellt werden, 
+welcher von `ResponseEntityExceptionHandler` ableitet. Für die Aufgabe soll mit 
+`de.ops.springbootworkshop.application.rest.model.ApiError` eine einheitliche Datenstruktur zur Ausgabe von 
+verschiedenen Fehlern verwendet werden. Der `ApiError` soll dabei den Fehlertext der Exception beinhalten.
 
 ```java
 public class ApiError {
@@ -120,8 +130,10 @@ public class ApiError {
 }
 ```
 
-Im Exception-Handler soll die Fehlerbehandlung der Exception `MethodArgumentNotValidException` anpassen, wozu die Methode
-`handleMethodArgumentNotValid(MethodArgumentNotValidException, HttpHeaders, HttpStatus, WebRequest)` aus `ResponseEntityExceptionHandler` überschrieben werden soll.
+Im Exception-Handler soll die Fehlerbehandlung der Exception `MethodArgumentNotValidException` angepasst werden. 
+Dazu muss die Methode
+`handleMethodArgumentNotValid(MethodArgumentNotValidException, HttpHeaders, HttpStatus, WebRequest)` aus 
+`ResponseEntityExceptionHandler` überschrieben werden.
 
 | Angabe          | Wert                               |
 |:----------------|:-----------------------------------|
@@ -129,7 +141,8 @@ Im Exception-Handler soll die Fehlerbehandlung der Exception `MethodArgumentNotV
 | Response-Body   | `ApiError`                         |
 
 
-Der Exception-Handler soll um eine Fehlerbehandlung von `PetShopApiException` erweitert werden, dazu muss eine Methode implementiert und annotiert werden.
+Der Exception-Handler soll um eine Fehlerbehandlung von `PetShopApiException` erweitert werden. 
+Dazu muss eine Methode implementiert und annotiert werden.
 
 | Angabe          | Wert                               |
 |:----------------|:-----------------------------------|
@@ -143,14 +156,15 @@ Der Exception-Handler soll um eine Fehlerbehandlung von `PetShopApiException` er
 **_HINWEIS:_** Es ist möglich einen Exception-Handler für konkrete, abstrakte bzw. abgeleitete Exceptions zu erstellen. Dazu muss die Methode mit `@ExceptionHandler` annotiert sein
 und die Exception als Parameter besitzen.
 
-**_HINWEIS:_** Wenn der Exception-Handler von `ResponseEntityExceptionHandler` ableitet werden gängige Exception behandelt. Die Methoden können überschrieben werden, um die
-Fehlerbehandlung für die jeweilige Exception anzupassen.
+**_HINWEIS:_** Wenn der Exception-Handler von `ResponseEntityExceptionHandler` ableitet, werden gängige Exceptions behandelt. 
+Die Methoden können überschrieben werden, um die Fehlerbehandlung für die jeweilige Exception anzupassen.
+
+**_HINWEIS:_** Die Klasse `ApiError` muss über öffentliche Getter und Setter verfügen
 
 
-### Zusatzaufgabe: erstelle und teste Web-MVC Test
+### Zusatzaufgabe: Erstelle und teste Web-MVC Test
 
-Der `PetShopRestController` soll hinsichtlich Funktionalität getestet werden für die folgenden Szenarien:
-
+Der `PetShopRestController` soll die folgenden Szenarien getestet werden:
 
 | REST-Endpoint            | Szenario                                                               | Erwartung                                                                                                        |
 |:-------------------------|:-----------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------|
@@ -161,7 +175,7 @@ Der `PetShopRestController` soll hinsichtlich Funktionalität getestet werden f�
 | `DELETE /petshop/{name}` | Invalider Request, der Name eines Haustiers existiert nicht            | HTTP-Status-Code `400`                                                                                           |
 | `DELETE /petshop/{name}` | Valider Request                                                        | HTTP-Status-Code `204`                                                                                           |
 
-Dazu soll ein Web-MVC-Test `de.osp.springbootworkshop.application.rest.PetShopRestControllerTest` erstellt werden.
+Dazu soll ein Web-MVC-Test als neue Klasse `de.osp.springbootworkshop.application.rest.PetShopRestControllerTest` erstellt werden.
 
 ```java
 // other imports omitted
@@ -179,7 +193,7 @@ public class PetShopRestControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private String toJSON(Object o) {
+    private String toJSON(Object o) throws JsonProcessingException {
         return objectMapper.writeValueAsString(o);
     }
 
