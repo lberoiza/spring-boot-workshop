@@ -164,8 +164,7 @@ Die Methoden können überschrieben werden, um die Fehlerbehandlung für die jew
 
 ### Zusatzaufgabe: Erstelle und teste Web-MVC Test
 
-Der `PetShopRestController` soll hinsichtlich Funktionalität getestet werden für die folgenden Szenarien:
-
+Der `PetShopRestController` soll die folgenden Szenarien getestet werden:
 
 | REST-Endpoint            | Szenario                                                               | Erwartung                                                                                                        |
 |:-------------------------|:-----------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------|
@@ -176,7 +175,7 @@ Der `PetShopRestController` soll hinsichtlich Funktionalität getestet werden f�
 | `DELETE /petshop/{name}` | Invalider Request, der Name eines Haustiers existiert nicht            | HTTP-Status-Code `400`                                                                                           |
 | `DELETE /petshop/{name}` | Valider Request                                                        | HTTP-Status-Code `204`                                                                                           |
 
-Dazu soll ein Web-MVC-Test `de.osp.springbootworkshop.application.rest.PetShopRestControllerTest` erstellt werden.
+Dazu soll ein Web-MVC-Test als neue Klasse `de.osp.springbootworkshop.application.rest.PetShopRestControllerTest` erstellt werden.
 
 ```java
 // other imports omitted
@@ -194,7 +193,7 @@ public class PetShopRestControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private String toJSON(Object o) {
+    private String toJSON(Object o) throws JsonProcessingException {
         return objectMapper.writeValueAsString(o);
     }
 
