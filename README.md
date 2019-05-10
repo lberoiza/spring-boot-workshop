@@ -2,18 +2,24 @@
 
 ## Aufgabenkomplex 5
 
-Der Aufgabenkomplex befasst sich mit der Absicherung der Anwendung in Spring Boot mit Spring Security. Ziel dieses Aufgabenkomplexes ist es den `PetShopRestController` mit einer
-Authentifizierung und Autorisierung mit Boardmitteln von Spring Security umzusetzen. Sowie Ausnahmen für die Actuator REST-Endpoints vorzunehmen.
+Der Aufgabenkomplex befasst sich mit der Absicherung der Anwendung mit Spring-Security. Ziel ist es, den `PetShopRestController` mit einer
+Authentifizierung und Autorisierung mit Boardmitteln von Spring-Security umzusetzen.
 
-### Aufgabe 5.1: erstellen Security-Konfiguration
+**_HINWEIS:_** Durch das Hinzufügen der Abhängigkeit `spring-boot-starter-security` in der pom.xml werden per default alle
+vorhandenen Rest-Endpoints im Projekt gesichert. Der Standardbenutzer lautet "user", das Passwort wird bei jedem Start
+der Applikation generiert und auf die Konsole geloggt.
 
-Es soll eine Konfiguration `de.osp.springbootworkshop.application.config.SecurityConfig` erstellt werden, welche von `WebSecurityConfigurerAdapter` ableitet.
+### Aufgabe 5.1: Erstellen einer Security-Konfiguration
+
+Es soll eine Konfiguration `de.osp.springbootworkshop.application.config.SecurityConfig` erstellt werden, 
+welche von `WebSecurityConfigurerAdapter` ableitet.
 
 
-### Aufgabe: 5.2: erstelle Benutzer im In-Memory-Realm
+### Aufgabe: 5.2: Erstelle Benutzer im In-Memory-Realm
 
-In der `SecurityConfig` soll die Methode `WebSecurityConfigurerAdapter#configure(AuthenticationManagerBuilder)` überschrieben werden, die Authentifizierung von Benutzern. Mit Hilfe
-von `AuthenticationManagerBuilder` sollen Benutzer in einem In-Memory-Realm angelegt werden. Dabei soll der Benutzername, das Passwort und Role(n) gesetzt werden.
+In der `SecurityConfig` soll die Methode `WebSecurityConfigurerAdapter#configure(AuthenticationManagerBuilder)` überschrieben werden. 
+In der neuen Methode sollen mit Hilfe von `AuthenticationManagerBuilder` Benutzer in einem In-Memory-Realm angelegt werden. 
+Dabei soll der Benutzername, das Passwort und Role(n) gesetzt werden.
 
 Es sollen die folgenden Benutzer angelegt werden:
 
@@ -38,11 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 **_DOKUMENTATION:_**
 [AuthenticationManagerBuilder Java Doc](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/authentication/builders/AuthenticationManagerBuilder.html)
 
-**_HINWEIS:_** Bei der Angabe des Passworts sollte als Prefix `{noop}` verwendet werden, wenn das Passwort im Klartext hinterlegt ist und damit der `PasswordEncoder` für Klartext
-verwendet werden soll.
+**_HINWEIS:_** Bei der Angabe des Passworts sollte als Prefix `{noop}` verwendet werden, wenn das Passwort im Klartext hinterlegt ist. 
+Damit wird der `PasswordEncoder` für Klartext verwendet und keine Operation (wie z.B. MD5 oder SHA-256) auf den darauf folgenden
+String angewendet.
 
 
-### Aufgabe 5.3: erstelle und teste Absicherung von Endpoints
+### Aufgabe 5.3: Erstelle und teste Absicherung von Endpoints
 
 In der `SecurityConfig` soll die Methode `WebSecurityConfigurerAdapter#configure(HttpSecurity)` überschrieben, um die Absicherung von HTTP-Endpoint anpassen zu können. Mit Hilfe
 von `HttpSecurity` sollen die HTTP-Endpoints von `/actuator` und `/h2-console` weiterhin ohne Absicherung erreichbar sein. Die HTTP-Endpoints vom `PetShopRestController` sollen
@@ -58,7 +65,7 @@ dagegen mit HTTP-Basic-Auth abgesichert sein und es soll ein zustandsloses Sessi
 ```java
 // annotations omitted
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-   @Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
