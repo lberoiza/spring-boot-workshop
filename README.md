@@ -51,9 +51,10 @@ String angewendet.
 
 ### Aufgabe 5.3: Erstelle und teste Absicherung von Endpoints
 
-In der `SecurityConfig` soll die Methode `WebSecurityConfigurerAdapter#configure(HttpSecurity)` überschrieben, um die Absicherung von HTTP-Endpoint anpassen zu können. Mit Hilfe
-von `HttpSecurity` sollen die HTTP-Endpoints von `/actuator` und `/h2-console` weiterhin ohne Absicherung erreichbar sein. Die HTTP-Endpoints vom `PetShopRestController` sollen
-dagegen mit HTTP-Basic-Auth abgesichert sein und es soll ein zustandsloses Session-Management verwendet werden.
+In der `SecurityConfig` soll die Methode `WebSecurityConfigurerAdapter#configure(HttpSecurity)` überschrieben werden, um 
+die Absicherung von HTTP-Endpoints anpassen zu können. Mit Hilfe von `HttpSecurity` sollen die HTTP-Endpoints von `/actuator` und `/h2-console` 
+weiterhin ohne Absicherung erreichbar sein. Die HTTP-Endpoints vom `PetShopRestController` sollen
+hingegen mit HTTP-Basic-Auth abgesichert werden und es soll ein zustandsloses Session-Management verwendet werden.
 
 | HTTP-Methode | Ressource              | Rolle(n)            |
 |:-------------|:-----------------------|:--------------------|
@@ -84,11 +85,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 **_DOKUMENTATION:_** [Spring Boot HTTP Security](https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#jc-httpsecurity),
 [HttpSecurity Java Doc](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/config/annotation/web/builders/HttpSecurity.html)
 
-**_HINWEIS:_** Die relative Pfadangabe der jeweiligen Resource erfolgt in der ANT-Pfad-Notation. Verwende `?` um ein beliebiges Zeichen zu matchen. Verwende `*` um keins, eins oder
-mehrere Zeichen zu matchen. Verwende `**` um keins, eins oder mehrere Sub-Resourcen im Pfad zu matchen.
+**_HINWEIS:_** Die relative Pfadangabe der jeweiligen Resource erfolgt in der ANT-Pfad-Notation. Verwende `?` um ein 
+beliebiges Zeichen zu matchen. Verwende `*` um keins, eins oder mehrere Zeichen zu matchen. 
+Verwende `**` um keins, eins oder mehrere Sub-Resourcen im Pfad zu matchen.
 
 
-### Zusatzaufgabe: erstelle und teste Web-MVC-Test hinsichtlich Security
+### Zusatzaufgabe: Erstelle und teste Web-MVC-Test hinsichtlich Security
 
 Der `PetShopRestController` soll hinsichtlich Security getestet werden für die folgenden Szenarien:
 
@@ -98,8 +100,9 @@ Der `PetShopRestController` soll hinsichtlich Security getestet werden für die 
 | `GET /petshop/pets` | Invalide Credentials bzw. Authentifizierung | HTTP-Status-Code `401` bzw `HttpStatus#UNAUTHORIZED` |
 | `GET /petshop/pets` | Invalide Rolle bzw. Autorisierung           | HTTP-Status-Code `403` bzw. `HttpStatus#FORBIDDEN`   |
 
-Dazu soll ein neuer Web-MVC-Test `de.osp.springbootworkshop.application.rest.PetShopRestControllerSecurityTest` erstellt werden. Durch die `MockMvcConfig`, welche mit
-`@TestConfiguration` annotiert ist, wird die Bean `MockMvc` so konfiguriert, dass die zuvor konfigurierte Spring Security verwendet wird.
+Dazu soll ein neuer Web-MVC-Test `de.osp.springbootworkshop.application.rest.PetShopRestControllerSecurityTest` erstellt werden. 
+Durch die `MockMvcConfig`, welche mit `@TestConfiguration` annotiert ist, wird die Bean `MockMvc` so konfiguriert, 
+dass die zuvor konfigurierte Spring Security verwendet wird.
 
 ```java
 // other imports omitted
@@ -142,6 +145,8 @@ public class PetShopRestControllerSecurityTest {
 [Spring Boot Security Request Matchers](https://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/#securitymockmvcresultmatchers),
 [SecurityMockMvcRequestPostProcessors Java Doc](https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/test/web/servlet/request/SecurityMockMvcRequestPostProcessors.html)
 
-**_HINWEIS:_** Wenn im Web-MVC-Test eine Authentifizierung gegen einen Endpoint erfolgen soll, z.B. mit HTTP-Basic-Auth, muss beim bauen des Requests
-`MockHttpServletRequestBuilder#with(RequestPostProcessor)` aufgerufen werden, um `SecurityMockMvcRequestPostProcessors#httpBasic(String, String)` verwendet werden. Wenn dagegen
-`SecurityMockMvcRequestPostProcessors#user(String)` aufgerufen wird, wird dieser Benutzer bereits als erfolgreich authentifiziert angesehen und ggf. invalide Credentials ignoriert.
+**_HINWEIS:_** Wenn im Web-MVC-Test eine Authentifizierung gegen einen Endpoint erfolgen soll, z.B. mit HTTP-Basic-Auth, muss beim Bauen 
+des Requests `MockHttpServletRequestBuilder#with(RequestPostProcessor)` aufgerufen und  
+`SecurityMockMvcRequestPostProcessors#httpBasic(String, String)` verwendet werden. Wenn dagegen
+`SecurityMockMvcRequestPostProcessors#user(String)` aufgerufen wird, wird dieser Benutzer bereits als erfolgreich authentifiziert angesehen 
+und ggf. invalide Credentials ignoriert.
