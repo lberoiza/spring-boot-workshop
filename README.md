@@ -13,7 +13,7 @@ Es soll ein Projekt mittels [Spring initializr](https://start.spring.io/) initi
 |:--------------------------------|:-------------------------------------------------------------|
 | Project                         | Maven Project                                                |
 | Language                        | Java                                                         |
-| Spring Boot                     | 2.1.4                                                        |
+| Spring Boot                     | 2.1.5                                                        |
 | Project Metadata > Group        | de.osp                                                       |
 | Project Metadata > Artifact     | spring-boot-workshop                                         |
 | Project Metadata > Name         | **wird automatisch erzeugt**                                 |
