@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()
             .authorizeRequests()
             .antMatchers("/my-open-endpoint**").permitAll()
             .antMatchers(HttpMethod.GET, "/my-closed-endpoint**").hasAnyRole("MYROLE")
