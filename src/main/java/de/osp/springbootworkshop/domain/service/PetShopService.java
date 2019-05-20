@@ -2,6 +2,9 @@ package de.osp.springbootworkshop.domain.service;
 
 import de.osp.springbootworkshop.domain.model.Pet;
 import de.osp.springbootworkshop.domain.model.PetType;
+import de.osp.springbootworkshop.domain.repository.PetRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,39 +17,30 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Service
 public class PetShopService {
-    private final Map<String, Pet> pets;
+    private final PetRepository pets;
 
-    public PetShopService() {
-        this.pets = new ConcurrentHashMap<>();
-
-        Pet klaus = new Pet("Klaus", new PetType("Hamster"), LocalDate.of(2019, 4, 13), BigDecimal.valueOf(20));
-        Pet rubert = new Pet("Rubert",new PetType("Hund"), LocalDate.of(2018, 9, 18), BigDecimal.valueOf(550));
-        Pet blacky = new Pet("Blacky",new PetType("Katze"), LocalDate.of(2018, 12, 12),  BigDecimal.valueOf(350));
-
-        this.pets.put(klaus.getName().toLowerCase().trim(), klaus);
-        this.pets.put(rubert.getName().toLowerCase().trim(), rubert);
-        this.pets.put(blacky.getName().toLowerCase().trim(), blacky);
+    @Autowired public PetShopService(PetRepository petRepository) {
+    	this.pets = petRepository;
     }
 
     public Iterable<Pet> listPets() {
-        return pets.values();
+        return pets.findAll();
     }
 
     public Pet createPet(final Pet pet) {
-        if(pets.containsKey(pet.getName().toLowerCase().trim())) {
+        if(pets.existsById(pet.getName())) {
             throw new PetAlreadyExistsException("pet '" + pet.getName() + "' already exists");
         }
 
-        pets.put(pet.getName().toLowerCase().trim(), pet);
+        return pets.save(pet);
 
-        return pets.get(pet.getName().toLowerCase().trim());
     }
 
     public void deletePet(final String name) {
-        if(pets.get(name.toLowerCase().trim()) == null) {
+        if(!pets.existsById(name)) {
             throw new PetNotExistsException("pet '" + name + "' doesn't exists");
         }
 
-        pets.remove(name.toLowerCase().trim());
+        pets.deleteById(name);
     }
 }
